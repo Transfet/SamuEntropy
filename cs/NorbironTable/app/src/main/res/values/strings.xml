@@ -4,4 +4,6 @@
     <color name="white">#FFFFFF</color>
     <string name="action_build">Build node</string>
     <string name="action_delete">Delete node</string>
+    <string name="loginButton">LOGIN</string>
+    <string name="startButton">START</string>
 </resources>
