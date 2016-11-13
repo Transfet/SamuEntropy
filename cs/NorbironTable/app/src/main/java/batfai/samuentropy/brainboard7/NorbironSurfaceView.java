@@ -39,7 +39,7 @@
  */
 package batfai.samuentropy.brainboard7;
 
-import android.opengl.GLSurfaceView;
+import android.util.Log;
 import android.view.SurfaceView;
 
 class Nodes {
@@ -107,13 +107,13 @@ class Nodes {
 
         neuronBox[5] = new NeuronBox(neuronSprite, 2 * 14, 64, 62, 15, nandIronProcCover, 600, 400);
 
-        resId = surfaceView.getResources().getIdentifier("buildproci", "drawable",
-                "batfai.samuentropy.brainboard7");
-        nandIronProcCover = android.graphics.BitmapFactory.decodeResource(surfaceView.getResources(), resId);
-        nandIronProcCover = android.graphics.Bitmap.createScaledBitmap(nandIronProcCover, 168, 197, false);
-
-        neuronBox[6] = new NeuronBox(neuronSprite, 2 * 14, 64, 62, 15, nandIronProcCover, 600, 600);
-        neuronBox[6].setType(0);
+//        resId = surfaceView.getResources().getIdentifier("buildproci", "drawable",
+//                "batfai.samuentropy.brainboard7");
+//        nandIronProcCover = android.graphics.BitmapFactory.decodeResource(surfaceView.getResources(), resId);
+//        nandIronProcCover = android.graphics.Bitmap.createScaledBitmap(nandIronProcCover, 168, 197, false);
+//
+//        neuronBox[6] = new NeuronBox(neuronSprite, 2 * 14, 64, 62, 15, nandIronProcCover, 600, 600);
+//        neuronBox[6].setType(0);
     }
 
     public android.graphics.Bitmap getBoardPic() {
@@ -131,10 +131,9 @@ class Nodes {
 }
 
 /**
- *
  * @author nbatfai
  */
-public class NorbironSurfaceView extends SurfaceView implements  Runnable{
+public class NorbironSurfaceView extends SurfaceView implements Runnable {
 
     private float startsx = 0;
     private float startsy = 0;
@@ -179,7 +178,7 @@ public class NorbironSurfaceView extends SurfaceView implements  Runnable{
     }
 
     public NorbironSurfaceView(android.content.Context context,
-            android.util.AttributeSet attrs) {
+                               android.util.AttributeSet attrs) {
         super(context, attrs);
 
         cinit(context);
@@ -187,7 +186,7 @@ public class NorbironSurfaceView extends SurfaceView implements  Runnable{
     }
 
     public NorbironSurfaceView(android.content.Context context,
-            android.util.AttributeSet attrs, int defStyle) {
+                               android.util.AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
         cinit(context);
@@ -211,10 +210,6 @@ public class NorbironSurfaceView extends SurfaceView implements  Runnable{
 
         this.context = context;
         nodes = new Nodes(this);
-
-        if (nodeBoxes.size() == 0) {
-            nodeBoxes.add((NeuronBox) nodes.get(6).clone());
-        }
 
         android.content.Intent intent = ((NeuronGameActivity) context).getIntent();
         android.os.Bundle bundle = intent.getExtras();
@@ -297,13 +292,6 @@ public class NorbironSurfaceView extends SurfaceView implements  Runnable{
         return r;
     }
 
-    public void newNode() {
-
-        android.content.Intent i = new android.content.Intent(context, NodeActivity.class);
-        context.startActivity(i);
-
-    }
-
     @Override
     public boolean onTouchEvent(android.view.MotionEvent event) {
 
@@ -320,15 +308,14 @@ public class NorbironSurfaceView extends SurfaceView implements  Runnable{
             NeuronBox nb = nearestNeuronBox(x + startsx, y + startsy);
             if (nb != null) {
 
-                if (nb.getType() == 0) {
-                    if (nb.getSelected()) {
-                        newNode();
-                    }
+                if (Check.isChecked) {
+                    nodeBoxes.remove(nb);
                 }
-
-                nb.setCover(!nb.getCover());
-                nb.setSelected(!nb.getSelected());
-                selNb = nb;
+                else {
+                    nb.setCover(!nb.getCover());
+                    nb.setSelected(!nb.getSelected());
+                    selNb = nb;
+                }
 
             } else {
                 selNb = null;

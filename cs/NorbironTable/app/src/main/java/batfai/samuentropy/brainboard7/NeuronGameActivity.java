@@ -39,10 +39,12 @@
  */
 package batfai.samuentropy.brainboard7;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 /**
@@ -51,25 +53,51 @@ import android.view.MenuItem;
  */
 public class NeuronGameActivity extends AppCompatActivity {
 
+    private boolean isChecked = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
                 
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem checkable = menu.findItem(R.id.action_delete);
+        checkable.setChecked(isChecked);
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                // User chose the "Settings" item, show the app settings UI...
+            case R.id.action_build:
+                android.content.Intent i = new android.content.Intent(this, NodeActivity.class);
+                startActivity(i);
                 return true;
 
-            case R.id.action_favorite:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
+            case R.id.action_delete:
+
+                if(!isChecked) {
+                    item.setIcon(R.drawable.ic_delete_white_48dp);
+                }
+                else {
+                    item.setIcon(R.drawable.ic_delete_black_48dp);
+                }
+                isChecked = !item.isChecked();
+                item.setChecked(isChecked);
+                Check.isChecked = this.isChecked;
+
                 return true;
 
             default:
@@ -80,5 +108,11 @@ public class NeuronGameActivity extends AppCompatActivity {
         }
     }
 
+    static NeuronGameActivity neuronGameActivity = new NeuronGameActivity();
+
+    public static boolean isChecked() {
+
+        return neuronGameActivity.isChecked;
+    }
 }
 
