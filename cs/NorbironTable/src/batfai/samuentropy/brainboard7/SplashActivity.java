@@ -90,6 +90,7 @@ public class SplashActivity extends android.app.Activity {
     public boolean onTouchEvent(android.view.MotionEvent evt) {
         if (evt.getAction() == android.view.MotionEvent.ACTION_DOWN) {
             splash.st();
+            finish();
         }
         return true;
     }

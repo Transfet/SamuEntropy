@@ -39,6 +39,9 @@
  */
 package batfai.samuentropy.brainboard7;
 
+import android.opengl.GLSurfaceView;
+import android.view.SurfaceView;
+
 class Nodes {
 
     private android.graphics.Bitmap boardPic;
@@ -131,7 +134,7 @@ class Nodes {
  *
  * @author nbatfai
  */
-public class NorbironSurfaceView extends android.view.SurfaceView implements Runnable {
+public class NorbironSurfaceView extends SurfaceView implements  Runnable{
 
     private float startsx = 0;
     private float startsy = 0;

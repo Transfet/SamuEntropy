@@ -2,4 +2,6 @@
 <resources>
     <string name="app_name">Norbiron Table</string>
     <color name="white">#FFFFFF</color>
+    <string name="action_settings">acSet</string>
+    <string name="action_favorite">acFav</string>
 </resources>
