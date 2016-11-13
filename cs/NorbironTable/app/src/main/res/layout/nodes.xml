@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/asd_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/nodelist"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"     
-              android:layout_centerInParent="true"                       
-              android:columnWidth="120dp"
-              android:verticalSpacing="15dp"
-              android:numColumns="auto_fit"
-              android:horizontalSpacing="10dp"
-              android:stretchMode="columnWidth"
-              android:gravity="center"/>
+        android:id="@+id/nodelist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:columnWidth="120dp"
+        android:gravity="center"
+        android:horizontalSpacing="10dp"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="15dp" />
+
 </RelativeLayout>

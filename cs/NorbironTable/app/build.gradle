@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "batfai.samuentropy.brainboard7"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 25
     }
 

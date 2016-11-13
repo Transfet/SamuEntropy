@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.plain_toolbar);
         setSupportActionBar(toolbar);
 
         final Button loginButton = (Button) findViewById(R.id.button);
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity
     public void startTable()
     {
         Intent intent = new Intent();
-        intent.setClass(this, NeuronGameActivity.class); //TODO
+        intent.setClass(this, NeuronGameActivity.class);
         this.startActivity(intent);
     }
 

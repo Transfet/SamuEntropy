@@ -39,6 +39,10 @@
  */
 package batfai.samuentropy.brainboard7;
 
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+
 class NodeAdapter extends android.widget.BaseAdapter {
 
     private android.content.Context context;
@@ -101,12 +105,20 @@ class NodeAdapter extends android.widget.BaseAdapter {
  *
  * @author nbatfai
  */
-public class NodeActivity extends android.app.Activity {
+public class NodeActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(android.os.Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nodes);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.asd_toolbar);
+        setSupportActionBar(toolbar);
+
+        // Get a support ActionBar corresponding to this toolbar
+        ActionBar ab = getSupportActionBar();
+
+        // Enable the Up button
+        ab.setDisplayHomeAsUpEnabled(true);
 
         android.widget.GridView gridView = (android.widget.GridView) findViewById(R.id.nodelist);
         gridView.setAdapter(new NodeAdapter(this));
