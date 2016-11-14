@@ -15,29 +15,32 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:text="@string/loginButton"
         android:textSize="40dp"
-        android:layout_marginLeft="114dp"
-        android:layout_marginStart="114dp"
         android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_toLeftOf="@+id/button_play"
+        android:layout_toStartOf="@+id/button_play"
+        android:layout_marginRight="66dp"
+        android:layout_marginEnd="66dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="@string/startButton"
         android:textSize="40dp"
-        android:layout_marginRight="123dp"
-        android:layout_marginEnd="123dp"
-        android:layout_centerVertical="true"
+        android:drawableTop="@drawable/gomb"
+        android:drawablePadding="5dp"
+        android:text="@string/startButton"
+        android:layout_marginRight="61dp"
+        android:layout_marginEnd="61dp"
+        android:layout_below="@+id/plain_toolbar"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp" />
 
 </RelativeLayout>

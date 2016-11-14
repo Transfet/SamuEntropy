@@ -112,6 +112,7 @@ public class NodeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nodes);
         Toolbar toolbar = (Toolbar) findViewById(R.id.asd_toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_dashboard_black_48dp);
         setSupportActionBar(toolbar);
 
         // Get a support ActionBar corresponding to this toolbar

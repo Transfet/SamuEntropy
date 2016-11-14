@@ -60,6 +60,7 @@ public class NeuronGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.neurongame);
         Toolbar toolbar = (Toolbar) findViewById(R.id.plain_toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_home_black_48dp);
         setSupportActionBar(toolbar);
 
         // Get a support ActionBar corresponding to this toolbar

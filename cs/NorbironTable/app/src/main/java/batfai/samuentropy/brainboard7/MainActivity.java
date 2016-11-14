@@ -18,8 +18,8 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.plain_toolbar);
         setSupportActionBar(toolbar);
 
-        final Button loginButton = (Button) findViewById(R.id.button);
-        final Button startButton = (Button) findViewById(R.id.button2);
+        final Button loginButton = (Button) findViewById(R.id.button_login);
+        final Button startButton = (Button) findViewById(R.id.button_play);
 
         startButton.setOnClickListener(new View.OnClickListener()
         {
