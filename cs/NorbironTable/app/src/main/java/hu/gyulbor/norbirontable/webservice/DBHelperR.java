@@ -86,7 +86,7 @@ public class DBHelperR extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select type from nodes", null);
 
-        cursor.moveToPosition(rowNumber);
+        cursor.moveToFirst();
         int type = Integer.parseInt(cursor.getString(cursor.getColumnIndex(NODES_COLUMN_TYPE)));
 
         cursor.close();
@@ -138,7 +138,7 @@ public class DBHelperR extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select node from nodes", null);
 
-        cursor.moveToPosition(rowNumber);
+        cursor.moveToFirst();
         long realNodeID = Long.parseLong(cursor.getString(cursor.getColumnIndex(NODES_COLUMN_NODE)));
 
         cursor.close();

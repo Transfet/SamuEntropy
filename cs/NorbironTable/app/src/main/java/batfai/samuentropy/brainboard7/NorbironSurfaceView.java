@@ -132,15 +132,21 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
 
     public void initBoxNodes() {
 
+        nodeDB = new DBHelperR(context);
+
         if (nodeBoxes.size() == 0) {
             int rowCount = NeuronGameActivity.nodeDB.countRows();
 
-            if (rowCount != 0) {
-                for (int i = 1; i <= (rowCount); ++i) {
-                    nodeBoxes.add(i, (NeuronBox) nodes.get(NeuronGameActivity.nodeDB.getType(i)).clone());
+            if (rowCount > 0) {
+                for (int i = 0; i <= rowCount; ++i) {
 
-                    //ALEX ITT HAL LE
-                    nodeBoxes.get(i).setId(nodeDB.getID(i));
+                    nodeBoxes.add((NeuronBox) nodes.get(NeuronGameActivity.nodeDB.getType(i)).clone());
+
+                    long id = nodeDB.getID(i);
+                    NeuronBox box = nodeBoxes.get(i);
+                    box.setId(id);
+
+
                     nodeBoxes.get(i).setXY(NeuronGameActivity.nodeDB.getX(nodeBoxes.get(i).getId()), NeuronGameActivity.nodeDB.getY(nodeBoxes.get(i).getId()));
                     nodeBoxes.get(i).setType(nodeDB.getType(i));
                 }
@@ -151,7 +157,7 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
     public void backupFromDB(Intent intent) {
         Log.d("asdsssssssss", "asd");
 
-        nodeDB = new DBHelperR(context);
+
 
         // long[] nodeList = new long[nodeDB.countRows()];
 
@@ -193,7 +199,7 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
             int i = bundle.getInt("selectedNode");
 
             nodeBoxes.add((NeuronBox) nodes.get(i).clone());
-           nodeBoxes.get(nodeBoxes.size()-1).setId(0);
+            nodeBoxes.get(nodeBoxes.size() - 1).setId(0);
         }
 
         surfaceHolder = getHolder();
