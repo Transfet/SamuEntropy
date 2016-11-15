@@ -39,11 +39,17 @@
  */
 package batfai.samuentropy.brainboard7;
 
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceView;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import hu.gyulbor.norbirontable.webservice.DBHelper;
 
 /**
  * @author nbatfai
@@ -76,6 +82,7 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
     private boolean running = true;
 
     private android.content.Context context;
+    private DBHelper nodeDB;
 
     public void setScaleFactor(float scaleFactor) {
         this.scaleFactor = scaleFactor;
@@ -121,12 +128,43 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
 
     }
 
+    public void backupFromDB (Intent intent) {
+        Log.d("asdsssssssss","asd");
+
+        nodeDB = new DBHelper(context);
+
+       // long[] nodeList = new long[nodeDB.countRows()];
+
+       long[] nodeList = intent.getLongArrayExtra("NODE_LIST");
+
+
+        int it = 0;
+       for (int i = 0; i < nodeDB.countRows()-1; i++) {
+            long currentNode = nodeList[i];
+           Log.d("asd",currentNode+"");
+/*
+           int type = nodeDB.getType(currentNode);
+           int x = nodeDB.getX(currentNode);
+           int y = nodeDB.getY(currentNode);
+
+
+        Log.d(currentNode+"", type + " " + xy[0] + " " + xy[1]);
+
+
+           nodeBoxes.add(i, (NeuronBox) nodes.get(type).clone());
+           nodeBoxes.get(i).setId(currentNode);
+           nodeBoxes.get(i).setXY(xy[0], xy[1]);*/
+       }
+    }
+
     private void cinit(android.content.Context context) {
 
         this.context = context;
 
-        android.content.Intent intent = ((NeuronGameActivity) context).getIntent();
+        Intent intent = ((NeuronGameActivity) context).getIntent();
         android.os.Bundle bundle = intent.getExtras();
+
+       backupFromDB(intent);
 
         if (bundle != null) {
             int i = bundle.getInt("selectedNode");

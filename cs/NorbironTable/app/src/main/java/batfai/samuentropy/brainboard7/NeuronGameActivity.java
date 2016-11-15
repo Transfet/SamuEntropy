@@ -69,7 +69,13 @@ public class NeuronGameActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        nodeDB = new DBHelper(this);
+        getIntent().getLongExtra("USER_ID", this.userID);
+        ArrayList<Long> nodeIDs = nodeDB.getNodes();
+        getIntent().putExtra("NODE_LIST", nodeIDs.toArray());
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.neuron);
         Toolbar toolbar = (Toolbar) findViewById(R.id.plain_toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_home_black_48dp);
@@ -80,16 +86,6 @@ public class NeuronGameActivity extends AppCompatActivity {
 
         // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
-
-        getIntent().getLongExtra("USER_ID", this.userID);
-
-        nodeDB = new DBHelper(this);
-
-        List<NeuronBox> boxList = nodeDB.getData(this);
-        if (boxList.size() > 0) {
-            NorbironSurfaceView.setNodeBoxes(boxList);
-        }
-
     }
 
     @Override
@@ -168,7 +164,7 @@ public class NeuronGameActivity extends AppCompatActivity {
 
             NeuronBox box = nodes.get(nodes.size() - 1);
 
-            if (box.getId() == null) {
+            if (box.getId() == 0) {
                 box.generateId();
             }
             try {

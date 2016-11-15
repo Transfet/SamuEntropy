@@ -7,6 +7,7 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(
                 "create table nodes" +
-                        "(type integer, x integer, y integer, user long, node string)"
+                        "(type integer, x integer, y integer, user long, node long)"
         );
     }
 
@@ -52,7 +53,7 @@ public class DBHelper extends SQLiteOpenHelper {
         onUpgrade(db, oldVersion, newVersion);
     }
 
-    public boolean insertNode(int type, int x, int y, long user, String node) {
+    public boolean insertNode(int type, int x, int y, long user, long node) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("type", type);
@@ -65,7 +66,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean updateNode(int type, int x, int y, long user, String node) {
+    public boolean updateNode(int type, int x, int y, long user, long node) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("type", type);
@@ -73,7 +74,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("y", y);
         contentValues.put("user", user);
         contentValues.put("node", node);
-        db.update("nodes", contentValues, "node = ? ", new String[]{node});
+        db.update("nodes", contentValues, "node = ? ", new String[] {Long.toString(node)});
         db.close();
         return true;
     }
@@ -84,49 +85,77 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public Integer deleteNode(String node) {
+    public Integer deleteNode(long node) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete("nodes",
                 "node = ? ",
-                new String[]{node});
+                new String[]{Long.toString(node)});
 
     }
 
-    public List<NeuronBox> getData(Context context) {
+    public int getType(long uuid) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from nodes", null);
+        Cursor cursor = db.rawQuery("select type from nodes where node = '" + uuid +"'", null);
 
-       // NorbironSurfaceView norbironSurfaceView = new NorbironSurfaceView(context);
-      //  nodes = norbironSurfaceView.getNodes();
+        int type = cursor.getInt(0);
 
-        this.getReadableDatabase();
-
-        List<NeuronBox> boxes = new ArrayList<>();
-
-        int index = 0;
-
-        if (cursor.moveToFirst()) {
-            while (cursor.moveToNext()) {
-                int type = cursor.getInt(index);
-                index++;
-                int x = cursor.getInt(index);
-                index++;
-                int y = cursor.getInt(index);
-                index++;
-                long user = cursor.getLong(index);
-                index++;
-                String node = cursor.getString(index);
-
-                NeuronBox box = (NeuronBox) nodes.get(type).clone();
-                box.setId(node);
-                box.setXY(x, y);
-                boxes.add(box);
-
-            }
-        }
         cursor.close();
         db.close();
-        return boxes;
+
+        return type;
+    }
+
+    public int getX (long uuid) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select x from nodes where node = '" + uuid +"'", null);
+        Log.d("uuid: ", uuid+"");
+
+        int x = cursor.getInt(0);
+
+        cursor.close();
+        db.close();
+
+        return x;
+    }
+
+    public int getY (long uuid) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select y from nodes where node = '" + uuid +"'", null);
+
+        int y = cursor.getInt(0);
+
+        cursor.close();
+        db.close();
+
+        return y;
+    }
+
+    public long getUser (long uuid) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select user from nodes where node = '" + uuid + "'", null);
+
+        long userID = cursor.getLong(0);
+
+        cursor.close();
+        db.close();
+
+        return userID;
+    }
+
+    public ArrayList<Long> getNodes () {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select node from nodes", null);
+
+        ArrayList<Long> nodeIDs = new ArrayList<>();
+
+        cursor.moveToFirst();
+
+        while (cursor.isAfterLast() == false) {
+            nodeIDs.add(cursor.getLong(0));
+            cursor.moveToNext();
+        }
+
+        return nodeIDs;
     }
 
     public int countRows() {

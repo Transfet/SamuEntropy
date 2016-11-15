@@ -39,6 +39,7 @@
  */
 package batfai.samuentropy.brainboard7;
 
+import java.util.Random;
 import java.util.UUID;
 
 import hu.gyulbor.norbirontable.webservice.DBHelper;
@@ -67,7 +68,7 @@ public class NeuronBox implements Cloneable {
     protected boolean selected = false;
 
     private int type = 1;
-    private String id;
+    private long id;
 
     public NeuronBox(int type, android.graphics.Bitmap tiles, int length, int width, int height,
             int numberOfNeurons,
@@ -198,16 +199,17 @@ public class NeuronBox implements Cloneable {
 
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
     public void generateId (){
-        String uniqueID = UUID.randomUUID().toString();
-        this.id = uniqueID;
+       // String uniqueID = UUID.randomUUID().toString();
+        Random random = new Random();
+       this.id = random.nextLong();
     }
 }
