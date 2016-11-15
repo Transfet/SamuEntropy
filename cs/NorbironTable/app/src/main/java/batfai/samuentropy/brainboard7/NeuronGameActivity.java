@@ -39,26 +39,38 @@
  */
 package batfai.samuentropy.brainboard7;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import hu.gyulbor.norbirontable.webservice.DBHelper;
+
 /**
- *
  * @author nbatfai
  */
 public class NeuronGameActivity extends AppCompatActivity {
 
     private boolean isChecked = false;
+    DBHelper nodeDB;
+    private long userID = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.neurongame);
+        setContentView(R.layout.neuron);
         Toolbar toolbar = (Toolbar) findViewById(R.id.plain_toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_home_black_48dp);
         setSupportActionBar(toolbar);
@@ -68,7 +80,16 @@ public class NeuronGameActivity extends AppCompatActivity {
 
         // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
-                
+
+        getIntent().getLongExtra("USER_ID", this.userID);
+
+        nodeDB = new DBHelper(this);
+
+        List<NeuronBox> boxList = nodeDB.getData(this);
+        if (boxList.size() > 0) {
+            NorbironSurfaceView.setNodeBoxes(boxList);
+        }
+
     }
 
     @Override
@@ -85,20 +106,30 @@ public class NeuronGameActivity extends AppCompatActivity {
         return true;
     }
 
+    private static boolean doesDatabaseExist(Context context, String dbName) {
+        File dbFile = context.getDatabasePath(dbName);
+        return dbFile.exists();
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_build:
                 android.content.Intent i = new android.content.Intent(this, NodeActivity.class);
                 startActivity(i);
+
+                nodeDB = new DBHelper(this);
+
+                Log.d("Rows: ", nodeDB.countRows() +"");
+
                 return true;
 
             case R.id.action_delete:
 
-                if(!isChecked) {
+                if (!isChecked) {
                     item.setIcon(R.drawable.ic_delete_white_48dp);
-                }
-                else {
+                } else {
                     item.setIcon(R.drawable.ic_delete_black_48dp);
                 }
                 isChecked = !item.isChecked();
@@ -120,6 +151,33 @@ public class NeuronGameActivity extends AppCompatActivity {
     public static boolean isChecked() {
 
         return neuronGameActivity.isChecked;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        nodeDB = new DBHelper(this);
+
+        ContentValues values = new ContentValues();
+        List<NeuronBox> nodes = NorbironSurfaceView.getNodeBoxes();
+
+        if (nodes.size() == 0) {
+
+        } else {
+
+            NeuronBox box = nodes.get(nodes.size() - 1);
+
+            if (box.getId() == null) {
+                box.generateId();
+            }
+            try {
+                nodeDB.insertNode(box.getType(), box.getX(), box.getY(), this.userID, box.getId());
+            } catch (RuntimeException e) {
+                Log.d("type : " + box.getType() + " " + box.getX() + " " + box.getY() + " " + this.userID + " " + box.getId(), e + "");
+            }
+
+        }
     }
 }
 

@@ -39,96 +39,11 @@
  */
 package batfai.samuentropy.brainboard7;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.SurfaceView;
 
-class Nodes {
-
-    private android.graphics.Bitmap boardPic;
-    private android.graphics.Bitmap neuronSprite;
-    private android.graphics.Bitmap nandIronProcCover;
-    private NeuronBox[] neuronBox;
-
-    public Nodes(android.view.SurfaceView surfaceView) {
-        int resId = surfaceView.getResources().getIdentifier("pcb550i", "drawable",
-                "batfai.samuentropy.brainboard7");
-
-        boardPic = android.graphics.BitmapFactory.decodeResource(surfaceView.getResources(), resId);
-
-        boardPic = android.graphics.Bitmap.createScaledBitmap(boardPic, 300, 300, false);
-
-        resId = surfaceView.getResources().getIdentifier("neuronsprite", "drawable",
-                "batfai.samuentropy.brainboard7");
-
-        neuronSprite = android.graphics.BitmapFactory.decodeResource(surfaceView.getResources(), resId);
-
-        neuronSprite = android.graphics.Bitmap.createScaledBitmap(neuronSprite, 64 * 2 * 14, 62, false);
-
-        resId = surfaceView.getResources().getIdentifier("nandironproci", "drawable",
-                "batfai.samuentropy.brainboard7");
-        nandIronProcCover = android.graphics.BitmapFactory.decodeResource(surfaceView.getResources(), resId);
-        nandIronProcCover = android.graphics.Bitmap.createScaledBitmap(nandIronProcCover, 168, 197, false);
-
-        neuronBox = new NeuronBox[7];
-        neuronBox[0] = new NeuronBox(neuronSprite, 2 * 14, 64, 62, 100, nandIronProcCover, 100, 100);
-
-        resId = surfaceView.getResources().getIdentifier("nandironproci2", "drawable",
-                "batfai.samuentropy.brainboard7");
-        nandIronProcCover = android.graphics.BitmapFactory.decodeResource(surfaceView.getResources(), resId);
-        nandIronProcCover = android.graphics.Bitmap.createScaledBitmap(nandIronProcCover, 168, 197, false);
-
-        neuronBox[1] = new NeuronBox(neuronSprite, 2 * 14, 64, 62, 10, nandIronProcCover, 350, 100);
-
-        resId = surfaceView.getResources().getIdentifier("matyironproci", "drawable",
-                "batfai.samuentropy.brainboard7");
-        nandIronProcCover = android.graphics.BitmapFactory.decodeResource(surfaceView.getResources(), resId);
-        nandIronProcCover = android.graphics.Bitmap.createScaledBitmap(nandIronProcCover, 168, 197, false);
-
-        neuronBox[2] = new NeuronBox(neuronSprite, 2 * 14, 64, 62, 15, nandIronProcCover, 600, 100);
-
-        resId = surfaceView.getResources().getIdentifier("matyironproci2", "drawable",
-                "batfai.samuentropy.brainboard7");
-        nandIronProcCover = android.graphics.BitmapFactory.decodeResource(surfaceView.getResources(), resId);
-        nandIronProcCover = android.graphics.Bitmap.createScaledBitmap(nandIronProcCover, 168, 197, false);
-
-        neuronBox[3] = new NeuronBox(neuronSprite, 2 * 14, 64, 62, 100, nandIronProcCover, 100, 400);
-
-        resId = surfaceView.getResources().getIdentifier("gretironproci2", "drawable",
-                "batfai.samuentropy.brainboard7");
-        nandIronProcCover = android.graphics.BitmapFactory.decodeResource(surfaceView.getResources(), resId);
-        nandIronProcCover = android.graphics.Bitmap.createScaledBitmap(nandIronProcCover, 168, 197, false);
-
-        neuronBox[4] = new NeuronBox(neuronSprite, 2 * 14, 64, 62, 10, nandIronProcCover, 350, 400);
-
-        resId = surfaceView.getResources().getIdentifier("gretironproci", "drawable",
-                "batfai.samuentropy.brainboard7");
-        nandIronProcCover = android.graphics.BitmapFactory.decodeResource(surfaceView.getResources(), resId);
-        nandIronProcCover = android.graphics.Bitmap.createScaledBitmap(nandIronProcCover, 168, 197, false);
-
-        neuronBox[5] = new NeuronBox(neuronSprite, 2 * 14, 64, 62, 15, nandIronProcCover, 600, 400);
-
-//        resId = surfaceView.getResources().getIdentifier("buildproci", "drawable",
-//                "batfai.samuentropy.brainboard7");
-//        nandIronProcCover = android.graphics.BitmapFactory.decodeResource(surfaceView.getResources(), resId);
-//        nandIronProcCover = android.graphics.Bitmap.createScaledBitmap(nandIronProcCover, 168, 197, false);
-//
-//        neuronBox[6] = new NeuronBox(neuronSprite, 2 * 14, 64, 62, 15, nandIronProcCover, 600, 600);
-//        neuronBox[6].setType(0);
-    }
-
-    public android.graphics.Bitmap getBoardPic() {
-        return boardPic;
-    }
-
-    public NeuronBox get(int i) {
-        return neuronBox[i];
-    }
-
-    public int getSize() {
-        return neuronBox.length;
-    }
-
-}
+import java.util.List;
 
 /**
  * @author nbatfai
@@ -149,7 +64,7 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
     protected float boardx = 0;
     protected float boardy = 0;
 
-    private Nodes nodes;
+    private Nodes nodes = new Nodes(this);;
     private static java.util.List<NeuronBox> nodeBoxes = new java.util.ArrayList<NeuronBox>();
 
     protected NeuronBox selNb = null;
@@ -209,7 +124,6 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
     private void cinit(android.content.Context context) {
 
         this.context = context;
-        nodes = new Nodes(this);
 
         android.content.Intent intent = ((NeuronGameActivity) context).getIntent();
         android.os.Bundle bundle = intent.getExtras();
@@ -220,7 +134,6 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
             android.util.Log.w("alma", "s" + i);
 
             nodeBoxes.add((NeuronBox) nodes.get(i).clone());
-
         }
 
         surfaceHolder = getHolder();
@@ -378,5 +291,17 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
 
         }
 
+    }
+
+    public static List<NeuronBox> getNodeBoxes() {
+        return nodeBoxes;
+    }
+
+    public static void setNodeBoxes(List<NeuronBox> nodeBoxes) {
+        NorbironSurfaceView.nodeBoxes = nodeBoxes;
+    }
+
+    public Nodes getNodes() {
+        return nodes;
     }
 }
