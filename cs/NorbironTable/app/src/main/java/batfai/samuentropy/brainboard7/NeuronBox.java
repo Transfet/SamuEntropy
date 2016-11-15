@@ -40,9 +40,6 @@
 package batfai.samuentropy.brainboard7;
 
 import java.util.Random;
-import java.util.UUID;
-
-import hu.gyulbor.norbirontable.webservice.DBHelper;
 
 /**
  *
@@ -204,12 +201,21 @@ public class NeuronBox implements Cloneable {
     }
 
     public void setId(long id) {
-        this.id = id;
+        this.id = generateID(id);
     }
 
-    public void generateId (){
-       // String uniqueID = UUID.randomUUID().toString();
-        Random random = new Random();
-       this.id = random.nextLong();
+    public long generateID(long currentID) {
+
+        if(currentID == 0) {
+            Random random = new Random();
+            long randomLong = (random.nextLong());
+            if (randomLong < 0) {
+                randomLong = randomLong * -1;
+            }
+            return randomLong;
+        }
+        else {
+            return currentID;
+        }
     }
 }

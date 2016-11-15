@@ -11,4 +11,6 @@ public class Check {
     public static void check () {
 
     }
+
+    public static int parsed = 0;
 }

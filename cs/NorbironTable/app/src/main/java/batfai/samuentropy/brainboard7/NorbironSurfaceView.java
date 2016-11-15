@@ -40,16 +40,12 @@
 package batfai.samuentropy.brainboard7;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import hu.gyulbor.norbirontable.webservice.DBHelper;
+import hu.gyulbor.norbirontable.webservice.DBHelperR;
 
 /**
  * @author nbatfai
@@ -70,7 +66,7 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
     protected float boardx = 0;
     protected float boardy = 0;
 
-    private Nodes nodes = new Nodes(this);;
+    private Nodes nodes;
     private static java.util.List<NeuronBox> nodeBoxes = new java.util.ArrayList<NeuronBox>();
 
     protected NeuronBox selNb = null;
@@ -82,7 +78,13 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
     private boolean running = true;
 
     private android.content.Context context;
-    private DBHelper nodeDB;
+    private DBHelperR nodeDB;
+
+    private static java.util.List<Long> nodeIds = new java.util.ArrayList<Long>();
+
+    public static List<Long> getNodeIds() {
+        return nodeIds;
+    }
 
     public void setScaleFactor(float scaleFactor) {
         this.scaleFactor = scaleFactor;
@@ -128,20 +130,38 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
 
     }
 
-    public void backupFromDB (Intent intent) {
-        Log.d("asdsssssssss","asd");
+    public void initBoxNodes() {
 
-        nodeDB = new DBHelper(context);
+        if (nodeBoxes.size() == 0) {
+            int rowCount = NeuronGameActivity.nodeDB.countRows();
 
-       // long[] nodeList = new long[nodeDB.countRows()];
+            if (rowCount != 0) {
+                for (int i = 1; i <= (rowCount); ++i) {
+                    nodeBoxes.add(i, (NeuronBox) nodes.get(NeuronGameActivity.nodeDB.getType(i)).clone());
 
-       long[] nodeList = intent.getLongArrayExtra("NODE_LIST");
+                    //ALEX ITT HAL LE
+                    nodeBoxes.get(i).setId(nodeDB.getID(i));
+                    nodeBoxes.get(i).setXY(NeuronGameActivity.nodeDB.getX(nodeBoxes.get(i).getId()), NeuronGameActivity.nodeDB.getY(nodeBoxes.get(i).getId()));
+                    nodeBoxes.get(i).setType(nodeDB.getType(i));
+                }
+            }
+        }
+    }
+
+    public void backupFromDB(Intent intent) {
+        Log.d("asdsssssssss", "asd");
+
+        nodeDB = new DBHelperR(context);
+
+        // long[] nodeList = new long[nodeDB.countRows()];
+
+        long[] nodeList = intent.getLongArrayExtra("NODE_LIST");
 
 
         int it = 0;
-       for (int i = 0; i < nodeDB.countRows()-1; i++) {
+        for (int i = 0; i < nodeDB.countRows() - 1; i++) {
             long currentNode = nodeList[i];
-           Log.d("asd",currentNode+"");
+            Log.d("asd", currentNode + "");
 /*
            int type = nodeDB.getType(currentNode);
            int x = nodeDB.getX(currentNode);
@@ -154,24 +174,26 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
            nodeBoxes.add(i, (NeuronBox) nodes.get(type).clone());
            nodeBoxes.get(i).setId(currentNode);
            nodeBoxes.get(i).setXY(xy[0], xy[1]);*/
-       }
+        }
     }
 
     private void cinit(android.content.Context context) {
 
         this.context = context;
+        nodes = new Nodes(this);
+
+        initBoxNodes();
 
         Intent intent = ((NeuronGameActivity) context).getIntent();
         android.os.Bundle bundle = intent.getExtras();
 
-       backupFromDB(intent);
+        //  backupFromDB(intent);
 
         if (bundle != null) {
             int i = bundle.getInt("selectedNode");
 
-            android.util.Log.w("alma", "s" + i);
-
             nodeBoxes.add((NeuronBox) nodes.get(i).clone());
+           nodeBoxes.get(nodeBoxes.size()-1).setId(0);
         }
 
         surfaceHolder = getHolder();
@@ -261,8 +283,7 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
 
                 if (Check.isChecked) {
                     nodeBoxes.remove(nb);
-                }
-                else {
+                } else {
                     nb.setCover(!nb.getCover());
                     nb.setSelected(!nb.getSelected());
                     selNb = nb;
