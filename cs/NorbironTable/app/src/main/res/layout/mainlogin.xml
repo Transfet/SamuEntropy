@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/signInAndSignUpButton">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:id="@+id/emailText"
+        android:hint="@string/uEmail"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:layout_below="@+id/emailText"
+        android:layout_alignRight="@+id/emailText"
+        android:layout_marginTop="17dp"
+        android:id="@+id/passwordText"
+        android:hint="@string/uPasswd" />
+
+    <Button
+        android:text="@string/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:layout_alignRight="@id/passwordText"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/loginButton"
+        android:layout_below="@+id/passwordText"
+        android:visibility="visible" />
+
+    <Button
+        android:text="@string/register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/passwordText"
+        android:layout="@+id/loginButton"
+        android:layout_marginTop="18dp"
+        android:layout_below="@+id/passwordText"
+        android:id="@+id/registerButton"
+        android:visibility="visible" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/registerButton"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"/>
+
+</RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/signedIn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:visibility="gone">
+
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signed_out"
+            android:textColor="@android:color/holo_green_dark"
+            android:textSize="30sp"
+            android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+
+
+</RelativeLayout>

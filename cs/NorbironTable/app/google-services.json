@@ -1,27 +1,33 @@
 {
   "project_info": {
-    "project_number": "86942743915",
-    "firebase_url": "https://norbirontable-gyulbor-42104.firebaseio.com",
-    "project_id": "norbirontable-gyulbor-42104",
-    "storage_bucket": "norbirontable-gyulbor-42104.appspot.com"
+    "project_number": "1019996227415",
+    "project_id": "firebase-norbirontable"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:86942743915:android:c88b42483f61c2db",
+        "mobilesdk_app_id": "1:1019996227415:android:c88b42483f61c2db",
         "android_client_info": {
           "package_name": "batfai.samuentropy.brainboard7"
         }
       },
       "oauth_client": [
         {
-          "client_id": "86942743915-72le3ep1uq689omfjm0t45s57idjr6jm.apps.googleusercontent.com",
+          "client_id": "1019996227415-p6paia0sintdkmktc693e46krh1581fn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "batfai.samuentropy.brainboard7",
+            "certificate_hash": "26375B3DC594F10FAD848F4FBF102B43091583B7"
+          }
+        },
+        {
+          "client_id": "1019996227415-f9elk38epqefc9l3esntbcagl3risju8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyADGPD8MRPBqcnZpmqREtx-pWVeXNKWFCc"
+          "current_key": "AIzaSyBgRrSfwrMScizNCpIvifmk1g9_3KViBzQ"
         }
       ],
       "services": {
@@ -33,7 +39,7 @@
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 2
+          "status": 1
         }
       }
     }

@@ -6,4 +6,19 @@
     <string name="action_delete">Delete node</string>
     <string name="loginButton">LOGIN</string>
     <string name="startButton">Play</string>
+    <string name="login">Sign In</string>
+    <string name="register">Sign Up</string>
+    <string name="uPasswd">Password</string>
+    <string name="uEmail">Email</string>
+
+
+    <string name="signed_in_fmt">Signed in as: %s</string>
+    <string name="loading">Loading…</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="signed_out">Signed out</string>
+
+
+    <string name="facebook_app_id">1353838351315513</string>
+    <string name="fb_login_protocol_scheme">fb1353838351315513</string>
 </resources>

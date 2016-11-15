@@ -38,7 +38,13 @@ public class MainActivity extends AppCompatActivity
             }
 
         });
+
+       // Bundle mBundle = getIntent().getExtras();
+        //mBundle.getBoolean("connectionCheck");
+
     }
+
+
 
     public void startTable()
     {
@@ -50,7 +56,7 @@ public class MainActivity extends AppCompatActivity
     public void startLogin()
     {
         Intent intent = new Intent();
-        intent.setClass(this, FacebookLoginActivity.class); //TODO
+        intent.setClass(this, LoginActivity.class);
         this.startActivity(intent);
 
     }
