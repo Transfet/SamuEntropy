@@ -138,14 +138,19 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
             int rowCount = NeuronGameActivity.nodeDB.countRows();
 
             if (rowCount > 0) {
-                for (int i = 0; i <= rowCount; ++i) {
 
-                    long nodeID = nodeDB.getID(i);
-                    nodeBoxes.add((NeuronBox) nodes.get(NeuronGameActivity.nodeDB.getType(nodeID)).clone());
+                List<Long> neuronIDs = nodeDB.getNodeIDs();
 
-                    nodeBoxes.get(i).setId(nodeID);
-                    nodeBoxes.get(i).setXY(NeuronGameActivity.nodeDB.getX(nodeBoxes.get(i).getId()), NeuronGameActivity.nodeDB.getY(nodeBoxes.get(i).getId()));
-                    nodeBoxes.get(i).setType(nodeDB.getType(nodeID));
+                for (Long currentID : neuronIDs) {
+
+                    long nodeID = currentID;
+                    NeuronBox box = (NeuronBox) nodes.get(NeuronGameActivity.nodeDB.getType(nodeID)).clone();
+                    box.setId(nodeID);
+                    box.setXY(NeuronGameActivity.nodeDB.getX(nodeID), NeuronGameActivity.nodeDB.getY(nodeID));
+                    box.setType(NeuronGameActivity.nodeDB.getType(nodeID));
+
+                    nodeBoxes.add(box);
+
                 }
             }
         }

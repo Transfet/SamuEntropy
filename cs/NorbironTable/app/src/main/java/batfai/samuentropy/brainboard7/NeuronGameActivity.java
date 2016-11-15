@@ -50,6 +50,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import hu.gyulbor.norbirontable.webservice.DBHelperR;
 
@@ -157,8 +159,9 @@ public class NeuronGameActivity extends AppCompatActivity {
                 boolean updateOnly = false;
 
                 if (rowCount > 0) {
-                    for (int j = 0; j <= rowCount; j++) {
-                        if (nodeDB.getID(j) == nodeID) {
+                    List<Long> nodesByID = NeuronGameActivity.nodeDB.getNodeIDs();
+                    for (long currentID : nodesByID) {
+                        if (currentID == nodeID) {
                             updateOnly = true;
                         }
                     }
@@ -175,13 +178,5 @@ public class NeuronGameActivity extends AppCompatActivity {
         }
 
     }
-    /*
-    @Override
-    protected void onStop () {
-        super.onStop();
-
-        Check.PARSED = 0;
-    }
-    */
 }
 

@@ -137,33 +137,15 @@ public class DBHelperR extends SQLiteOpenHelper {
         return userID;
     }
 
-    public long getID(int rowNumber) {
+    public ArrayList<Long> getNodeIDs() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select node from nodes", null);
 
-        cursor.moveToFirst();
-        long realNodeID = Long.parseLong(cursor.getString(cursor.getColumnIndex(NODES_COLUMN_NODE)));
-
-        cursor.close();
-        db.close();
-
-        return realNodeID;
-    }
-
-
-    public ArrayList<String> getNodes() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select * from nodes", null);
-
-        ArrayList<String> nodes = new ArrayList<>();
+        ArrayList<Long> nodes = new ArrayList<>();
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()) {
-            nodes.add(cursor.getString(cursor.getColumnIndex(NODES_COLUMN_TYPE)) + " " +
-                    cursor.getString(cursor.getColumnIndex(NODES_COLUMN_POSITION_X)) + " " +
-                    cursor.getString(cursor.getColumnIndex(NODES_COLUMN_POSITION_Y)) + " " +
-                    cursor.getString(cursor.getColumnIndex(NODES_COLUMN_NODE)) + " " +
-                    cursor.getString(cursor.getColumnIndex(NODES_COLUMN_USER)));
+            nodes.add(cursor.getLong(cursor.getColumnIndex(NODES_COLUMN_NODE)));
             cursor.moveToNext();
         }
         cursor.close();
