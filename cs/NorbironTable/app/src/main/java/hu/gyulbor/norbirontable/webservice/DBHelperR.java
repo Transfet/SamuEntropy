@@ -28,7 +28,7 @@ public class DBHelperR extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(
                 "create table nodes" +
-                        "(type integer, x integer, y integer, user long, node long)"
+                        "(type integer, x integer, y integer, user long, node long primary key unique)"
         );
     }
 
@@ -82,12 +82,15 @@ public class DBHelperR extends SQLiteOpenHelper {
 
     }
 
-    public int getType(int rowNumber) {
+    public int getType(long nodeID) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select type from nodes", null);
+        Cursor cursor = db.rawQuery("select type from nodes where node = '" + nodeID + "'", null);
 
-        cursor.moveToFirst();
-        int type = Integer.parseInt(cursor.getString(cursor.getColumnIndex(NODES_COLUMN_TYPE)));
+        int type = 111;
+
+        if (cursor.moveToFirst()) {
+           type = Integer.parseInt(cursor.getString(cursor.getColumnIndex(NODES_COLUMN_TYPE)));
+        }
 
         cursor.close();
         db.close();

@@ -140,46 +140,14 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
             if (rowCount > 0) {
                 for (int i = 0; i <= rowCount; ++i) {
 
-                    nodeBoxes.add((NeuronBox) nodes.get(NeuronGameActivity.nodeDB.getType(i)).clone());
+                    long nodeID = nodeDB.getID(i);
+                    nodeBoxes.add((NeuronBox) nodes.get(NeuronGameActivity.nodeDB.getType(nodeID)).clone());
 
-                    long id = nodeDB.getID(i);
-                    NeuronBox box = nodeBoxes.get(i);
-                    box.setId(id);
-
-
+                    nodeBoxes.get(i).setId(nodeID);
                     nodeBoxes.get(i).setXY(NeuronGameActivity.nodeDB.getX(nodeBoxes.get(i).getId()), NeuronGameActivity.nodeDB.getY(nodeBoxes.get(i).getId()));
-                    nodeBoxes.get(i).setType(nodeDB.getType(i));
+                    nodeBoxes.get(i).setType(nodeDB.getType(nodeID));
                 }
             }
-        }
-    }
-
-    public void backupFromDB(Intent intent) {
-        Log.d("asdsssssssss", "asd");
-
-
-
-        // long[] nodeList = new long[nodeDB.countRows()];
-
-        long[] nodeList = intent.getLongArrayExtra("NODE_LIST");
-
-
-        int it = 0;
-        for (int i = 0; i < nodeDB.countRows() - 1; i++) {
-            long currentNode = nodeList[i];
-            Log.d("asd", currentNode + "");
-/*
-           int type = nodeDB.getType(currentNode);
-           int x = nodeDB.getX(currentNode);
-           int y = nodeDB.getY(currentNode);
-
-
-        Log.d(currentNode+"", type + " " + xy[0] + " " + xy[1]);
-
-
-           nodeBoxes.add(i, (NeuronBox) nodes.get(type).clone());
-           nodeBoxes.get(i).setId(currentNode);
-           nodeBoxes.get(i).setXY(xy[0], xy[1]);*/
         }
     }
 
@@ -192,8 +160,6 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
 
         Intent intent = ((NeuronGameActivity) context).getIntent();
         android.os.Bundle bundle = intent.getExtras();
-
-        //  backupFromDB(intent);
 
         if (bundle != null) {
             int i = bundle.getInt("selectedNode");

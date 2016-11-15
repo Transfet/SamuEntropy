@@ -77,11 +77,6 @@ public class NeuronGameActivity extends AppCompatActivity {
 
         // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
-
-
-      /*  getIntent().getLongExtra("USER_ID", this.userID);
-        ArrayList<Long> nodeIDs = nodeDB.getNodes();
-        getIntent().putExtra("NODE_LIST", nodeIDs.toArray());*/
     }
 
     @Override
@@ -145,19 +140,48 @@ public class NeuronGameActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        int parsed = Check.parsed;
+        nodeDB = new DBHelperR(this);
 
-        if (parsed < NorbironSurfaceView.getNodeBoxes().size()) {
+        if (NorbironSurfaceView.getNodeBoxes().size() != 0) {
 
-            int type = NorbironSurfaceView.getNodeBoxes().get(parsed).getType();
-            int x = NorbironSurfaceView.getNodeBoxes().get(parsed).getX();
-            int y = NorbironSurfaceView.getNodeBoxes().get(parsed).getY();
+            for (int i = 0; i < NorbironSurfaceView.getNodeBoxes().size(); i++) {
 
-            long nodeID = NorbironSurfaceView.getNodeBoxes().get(parsed).getId();
-            Log.d(type + " " + x + " " + y + " " + nodeID, "meg a faszom");
-            nodeDB.insertNode(type, x, y, userID, nodeID);
-            Check.parsed++;
+                int type = NorbironSurfaceView.getNodeBoxes().get(i).getType();
+                int x = NorbironSurfaceView.getNodeBoxes().get(i).getX();
+                int y = NorbironSurfaceView.getNodeBoxes().get(i).getY();
+                long nodeID = NorbironSurfaceView.getNodeBoxes().get(i).getId();
+
+                Log.d(type + " " + x + " " + y + " " + nodeID, "meg a faszom");
+
+                int rowCount = NeuronGameActivity.nodeDB.countRows();
+                boolean updateOnly = false;
+
+                if (rowCount > 0) {
+                    for (int j = 0; j <= rowCount; j++) {
+                        if (nodeDB.getID(j) == nodeID) {
+                            updateOnly = true;
+                        }
+                    }
+                }
+
+                if (updateOnly) {
+                    nodeDB.updateNode(type, x, y, userID, nodeID);
+                    Log.d("csak", "update");
+                } else {
+                    nodeDB.insertNode(type, x, y, userID, nodeID);
+                    Log.d("csak", "insert");
+                }
+            }
         }
+
     }
+    /*
+    @Override
+    protected void onStop () {
+        super.onStop();
+
+        Check.PARSED = 0;
+    }
+    */
 }
 
