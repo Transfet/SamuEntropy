@@ -1,10 +1,9 @@
 package hu.gyulbro.webservice.repository;
 
-
-import hu.gyulbro.webservice.entity.Users;
+import hu.gyulbro.webservice.entity.Node;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UsersRepository extends JpaRepository<Users,String> {
+public interface NodeRepository extends JpaRepository<Node,String> {
 }

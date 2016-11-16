@@ -1,38 +1,29 @@
-package hu.gyulbro.webservice.entity;
+package hu.gyulbro.webservice.duplicate;
 
-import org.hibernate.validator.constraints.Email;
+import hu.gyulbro.webservice.entity.Node;
 
-import javax.persistence.*;
-import java.util.List;
+import java.util.ArrayList;
 
-@Entity
-@Table(name = "users")
-public class Users {
+public class UserBO {
 
-    @Column(unique = true)
     private String nickname;
     private String firstName;
     private String lastName;
-
-    public static final String ID_COLUMN_NAME = "USER_ID";
-    @Id
-    @Column(name = ID_COLUMN_NAME)
     private String userID;
     private String googleID;
-
-    @Email
     private String email;
     private String password;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Nodes> nodesList;
+    ArrayList<Node> nodeList = new ArrayList<>();
 
-    public List<Nodes> getNodesList() {
-        return nodesList;
-    }
+    public UserBO () {};
 
-    public void setNodesList(List<Nodes> nodesList) {
-        this.nodesList = nodesList;
+    public UserBO(String nickname, String email, String firstName, String lastName, String password) {
+        this.nickname = nickname;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
     }
 
     public String getNickname() {
@@ -89,5 +80,13 @@ public class Users {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public ArrayList<Node> getNodeList() {
+        return nodeList;
+    }
+
+    public void setNodeList(ArrayList<Node> nodeList) {
+        this.nodeList = nodeList;
     }
 }

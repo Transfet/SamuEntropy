@@ -5,15 +5,15 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "nodes")
-public class Nodes {
+public class Node {
 
     private String type;
     private String xCoordinate;
     private String yCoordinate;
 
     @ManyToOne
-    @JoinColumn(name = "USER_ID", referencedColumnName=Users.ID_COLUMN_NAME)
-    private Users user;
+    @JoinColumn(name = "USER_ID", referencedColumnName= User.ID_COLUMN_NAME)
+    private User user;
 
     @Id
     @Column(name = "NODE_ID")
@@ -43,11 +43,11 @@ public class Nodes {
         this.yCoordinate = yCoordinate;
     }
 
-    public Users getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(Users user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

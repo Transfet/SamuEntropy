@@ -1,14 +1,14 @@
 package hu.gyulbro.webservice.duplicate;
 
-public class Node {
+public class NodeBO {
     private String userID;
     private String nodeID;
     private String xCoordinate;
     private String yCoordinate;
     private String type;
 
-    public Node(String userID, String nodeID,
-                String xCoordinate, String yCoordinate, String type) {
+    public NodeBO(String userID, String nodeID,
+                  String xCoordinate, String yCoordinate, String type) {
         this.userID = userID;
         this.nodeID = nodeID;
         this.xCoordinate = xCoordinate;
