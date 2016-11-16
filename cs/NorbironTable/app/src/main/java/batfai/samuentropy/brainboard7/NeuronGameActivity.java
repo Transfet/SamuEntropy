@@ -154,7 +154,7 @@ public class NeuronGameActivity extends AppCompatActivity {
                 int y = NorbironSurfaceView.getNodeBoxes().get(i).getY();
                 long nodeID = NorbironSurfaceView.getNodeBoxes().get(i).getId();
 
-                Log.d(type + " " + x + " " + y + " " + nodeID, "meg a faszom");
+                Log.d("Created node with: ",type + " " + x + " " + y + " " + nodeID);
 
                 int rowCount = NeuronGameActivity.nodeDB.countRows();
                 boolean updateOnly = false;

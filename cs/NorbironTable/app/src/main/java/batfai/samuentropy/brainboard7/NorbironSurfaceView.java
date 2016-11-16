@@ -171,7 +171,7 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
             int i = bundle.getInt("selectedNode");
 
             nodeBoxes.add((NeuronBox) nodes.get(i).clone());
-            nodeBoxes.get(nodeBoxes.size() - 1).setId(0);
+            nodeBoxes.get(nodeBoxes.size() - 1).setId(0); //SET ID OF THE JUST-CREATED NODE
         }
 
         surfaceHolder = getHolder();
