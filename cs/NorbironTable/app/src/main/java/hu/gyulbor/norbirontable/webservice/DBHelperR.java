@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class DBHelperR extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
