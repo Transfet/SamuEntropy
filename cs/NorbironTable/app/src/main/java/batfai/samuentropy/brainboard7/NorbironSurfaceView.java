@@ -40,7 +40,6 @@
 package batfai.samuentropy.brainboard7;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.SurfaceView;
 
 import java.util.ArrayList;
@@ -68,7 +67,7 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
     protected float boardy = 0;
 
     private Nodes nodes;
-    private static java.util.List<NeuronBox> nodeBoxes = new java.util.ArrayList<NeuronBox>();
+    private static java.util.List<NeuronBox> nodeBoxes = new java.util.ArrayList<>();
 
     protected NeuronBox selNb = null;
 
@@ -81,11 +80,7 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
     private android.content.Context context;
     private DBHelperR nodeDB;
 
-    private static java.util.List<Long> nodeIds = new java.util.ArrayList<Long>();
-
-    public static List<Long> getNodeIds() {
-        return nodeIds;
-    }
+    private static java.util.List<Long> nodeIds = new java.util.ArrayList<>();
 
     public void setScaleFactor(float scaleFactor) {
         this.scaleFactor = scaleFactor;
@@ -135,11 +130,14 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
 
         nodeDB = new DBHelperR(context);
 
+        // ha nincs lent node, megvizsgáljuk az adatbázist, hátha abban van valami.
         if (nodeBoxes.size() == 0) {
             int rowCount = NeuronGameActivity.nodeDB.countRows();
 
+            //ha legalább 1 sora van, biztosan van benne valami , ezért feldolgozzuk, majd hozzáadjuk a nodeokat tartalmazó vektorhoz.
             if (rowCount > 0) {
 
+                //kiszedjük az összes id-t, ami az adatbázisban található, majd eszerint fogjuk lekérni az egyes nodeokhoz tartozó adatokat.
                 List<Long> neuronIDs = nodeDB.getNodeIDs();
 
                 for (Long currentID : neuronIDs) {
@@ -171,7 +169,7 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
             int i = bundle.getInt("selectedNode");
 
             nodeBoxes.add((NeuronBox) nodes.get(i).clone());
-            nodeBoxes.get(nodeBoxes.size() - 1).setId(0); //SET ID OF THE JUST-CREATED NODE
+            nodeBoxes.get(nodeBoxes.size() - 1).setId(0); //beállítja az id-jét ennek az éppen létrehozott nodenak.
         }
 
         surfaceHolder = getHolder();
@@ -197,7 +195,7 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
                 }
             }
 
-            List<NeuronBox> workAroundList = new ArrayList<NeuronBox>(nodeBoxes); //workaround to prevent ConcurrentModificationException
+            List<NeuronBox> workAroundList = new ArrayList<>(nodeBoxes); //workaround to prevent ConcurrentModificationException
 
             for (NeuronBox nb : workAroundList) {
                 nb.draw(-startsx, -startsy, canvas);
@@ -314,7 +312,6 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
     @Override
     public void run() {
         long now = System.currentTimeMillis(), newnow;
-        float spritex = 0;
         running = true;
         while (running) {
 

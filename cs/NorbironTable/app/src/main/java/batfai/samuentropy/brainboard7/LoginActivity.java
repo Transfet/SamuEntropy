@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -48,8 +49,15 @@ public class LoginActivity extends AppCompatActivity implements
         emailField = (EditText) (findViewById(R.id.emailText));
         passwordField = (EditText) findViewById((R.id.passwordText));
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.plain_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.login_toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_home_black_48dp);
         setSupportActionBar(toolbar);
+
+        // Get a support ActionBar corresponding to this toolbar
+        ActionBar ab = getSupportActionBar();
+
+        // Enable the Up button
+        ab.setDisplayHomeAsUpEnabled(true);
 
         loginButton = (Button) findViewById(R.id.loginButton);
         registerButton = (Button) findViewById(R.id.registerButton);
@@ -86,7 +94,7 @@ public class LoginActivity extends AppCompatActivity implements
 
         SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
-        signInButton.setScopes(gso.getScopeArray());
+        signInButton.setScopes(gso.getScopeArray()); //DEPRECATED TODO ALEX LEHET CSAK MOST LETT AZ, DE MEG KELL NÉZNI!
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
         mStatusTextView = (TextView) findViewById(R.id.status);
@@ -147,9 +155,6 @@ public class LoginActivity extends AppCompatActivity implements
             assert acct != null;
             mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
             updateUI(signedIn);
-
-            //  String iid = InstanceID.getInstance(context).getId();
-
 
         } else {
             updateUI(signedIn);
@@ -232,7 +237,7 @@ public class LoginActivity extends AppCompatActivity implements
 
     }
 
-    public void start() {
+    private void start() {
         Intent intent = new Intent();
         intent.setClass(this, NeuronGameActivity.class);
         this.startActivity(intent);

@@ -11,13 +11,13 @@ import java.util.ArrayList;
 
 public class DBHelperR extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final String DATABASE_NAME = "NodeBackup.db";
-    public static final String NODES_TABLE_NAME = "nodes";
-    public static final String NODES_COLUMN_TYPE = "type";
-    public static final String NODES_COLUMN_POSITION_X = "x";
-    public static final String NODES_COLUMN_POSITION_Y = "y";
-    public static final String NODES_COLUMN_USER = "user";
-    public static final String NODES_COLUMN_NODE = "node";
+    private static final String DATABASE_NAME = "NodeBackup.db";
+    private static final String NODES_TABLE_NAME = "nodes";
+    private static final String NODES_COLUMN_TYPE = "type";
+    private static final String NODES_COLUMN_POSITION_X = "x";
+    private static final String NODES_COLUMN_POSITION_Y = "y";
+    private static final String NODES_COLUMN_USER = "user";
+    private static final String NODES_COLUMN_NODE = "node";
 
     public DBHelperR(Context context) {
         super(context, DATABASE_NAME, null, 5);
@@ -65,12 +65,6 @@ public class DBHelperR extends SQLiteOpenHelper {
         db.update("nodes", contentValues, "node = ? ", new String[]{Long.toString(nodeID)});
         db.close();
         return true;
-    }
-
-    public void dropTable() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DROP TABLE IF EXISTS nodes");
-        db.close();
     }
 
     public Integer deleteNode(long nodeID) {

@@ -20,11 +20,10 @@ android {
     }
 
     dependencies{
-        compile "com.android.support:support-core-utils:25.0.0"
-        compile "com.android.support:appcompat-v7:25.0.0"
+        compile "com.android.support:support-core-utils:25.0.1"
+        compile "com.android.support:appcompat-v7:25.0.1"
         compile 'com.google.code.gson:gson:2.8.0'
         compile 'com.google.android.gms:play-services-auth:9.8.0'
-        //compile 'com.google.android.gms:play-services-identity:9.8.0'
     }
 }
 

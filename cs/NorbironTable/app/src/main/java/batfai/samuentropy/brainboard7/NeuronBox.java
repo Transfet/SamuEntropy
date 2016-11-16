@@ -51,18 +51,18 @@ public class NeuronBox implements Cloneable {
 
     private android.graphics.Bitmap tiles;
     private android.graphics.Bitmap cover;
-    android.graphics.Rect to;
+    private android.graphics.Rect to;
     private int boxWidth;
     private int boxHeight;
     private int x;
     private int y;
-    int numberOfNeurons;
-    protected static android.graphics.Paint boxPaint = new android.graphics.Paint();
-    protected static android.graphics.Paint selectedBoxPaint = new android.graphics.Paint();
-    protected int selectedBoxPaintSize = 0;
+    private int numberOfNeurons;
+    private static android.graphics.Paint boxPaint = new android.graphics.Paint();
+    private static android.graphics.Paint selectedBoxPaint = new android.graphics.Paint();
+    private int selectedBoxPaintSize = 0;
 
-    protected boolean open = false;
-    protected boolean selected = false;
+    private boolean open = false;
+    private boolean selected = false;
 
     private int type = 1;
     private long id;
@@ -160,8 +160,8 @@ public class NeuronBox implements Cloneable {
 
     public void draw(float shiftx, float shifty, android.graphics.Canvas canvas) {
 
-        for (int i = 0; i < neurons.length; ++i) {
-            neurons[i].draw(x + shiftx, y + shifty, canvas);
+        for(Sprite sprite: neurons) {
+            sprite.draw(x + shiftx, y + shifty, canvas);
         }
 
         canvas.drawRect(x + shiftx, y + shifty, x + shiftx + boxWidth, y + shifty + boxHeight, boxPaint);
@@ -190,8 +190,8 @@ public class NeuronBox implements Cloneable {
 
     public void step() {
 
-        for (int i = 0; i < neurons.length; ++i) {
-            neurons[i].step();
+        for(Sprite sprite: neurons) {
+            sprite.step();
         }
 
     }

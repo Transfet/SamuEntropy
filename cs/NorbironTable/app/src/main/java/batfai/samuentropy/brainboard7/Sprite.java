@@ -68,8 +68,6 @@ public class Sprite {
         from = new android.graphics.Rect(0, 0, width, height);
         to = new android.graphics.Rect(0, 0, width, height);
 
-        java.util.Random r = new java.util.Random();
-
         tileIndex = random.nextInt(length) + 1;
 
         x = (random.nextInt(100) + 1) * 3;

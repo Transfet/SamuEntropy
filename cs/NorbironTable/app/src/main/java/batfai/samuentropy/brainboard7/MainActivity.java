@@ -42,14 +42,14 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    public void startTable()
+    private void startTable()
     {
         Intent intent = new Intent();
         intent.setClass(this, NeuronGameActivity.class);
         this.startActivity(intent);
     }
 
-    public void startLogin()
+    private void startLogin()
     {
         Intent intent = new Intent();
         intent.setClass(this, LoginActivity.class);
