@@ -163,12 +163,13 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
         initBoxNodes();
 
         Intent intent = ((NeuronGameActivity) context).getIntent();
-        android.os.Bundle bundle = intent.getExtras();
 
-        if (bundle != null) {
-            int i = bundle.getInt("selectedNode");
+        int defaultValue = 1111;
+        int selectedNodeType = (intent.getIntExtra("selectedNode", defaultValue));
 
-            nodeBoxes.add((NeuronBox) nodes.get(i).clone());
+        if (selectedNodeType != defaultValue) {
+
+            nodeBoxes.add((NeuronBox) nodes.get(selectedNodeType).clone());
             nodeBoxes.get(nodeBoxes.size() - 1).setId(0); //beállítja az id-jét ennek az éppen létrehozott nodenak.
         }
 

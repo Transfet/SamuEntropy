@@ -59,12 +59,14 @@ public class NeuronGameActivity extends AppCompatActivity {
 
     private boolean isChecked = false;
     public static DBHelperR nodeDB;
-    private long userID = 0;
+    private String userID = "default";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         nodeDB = new DBHelperR(this);
         super.onCreate(savedInstanceState);
+
+        this.userID = getIntent().getStringExtra("userID");
 
         setContentView(R.layout.neuron);
         Toolbar toolbar = (Toolbar) findViewById(R.id.plain_toolbar);
@@ -146,7 +148,7 @@ public class NeuronGameActivity extends AppCompatActivity {
                 int y = NorbironSurfaceView.getNodeBoxes().get(i).getY();
                 long nodeID = NorbironSurfaceView.getNodeBoxes().get(i).getId();
 
-                Log.d("Created node with: ", type + " " + x + " " + y + " " + nodeID);
+                Log.d("Created node with: ", type + " " + x + " " + y + " " + userID + " " + nodeID);
 
                 int rowCount = NeuronGameActivity.nodeDB.countRows();
                 boolean updateOnly = false;

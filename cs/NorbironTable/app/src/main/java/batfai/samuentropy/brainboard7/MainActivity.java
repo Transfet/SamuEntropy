@@ -10,7 +10,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity
 {
 
-    private long userID;
+    private String userID = "default_from_main";
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -42,18 +42,20 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    //starts the game
     private void startTable()
     {
         Intent intent = new Intent();
         intent.setClass(this, NeuronGameActivity.class);
+        intent.putExtra("userID", userID);
         this.startActivity(intent);
     }
 
+    //navigates to the login interface
     private void startLogin()
     {
         Intent intent = new Intent();
         intent.setClass(this, LoginActivity.class);
-        //intent.putExtra("USER_ID", userID);
         this.startActivity(intent);
 
     }

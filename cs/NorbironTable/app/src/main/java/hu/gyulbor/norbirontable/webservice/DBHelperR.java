@@ -27,7 +27,7 @@ public class DBHelperR extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(
                 "create table nodes" +
-                        "(type integer, x integer, y integer, user long, node long primary key unique)"
+                        "(type integer, x integer, y integer, user varchar, node long primary key unique)"
         );
     }
 
@@ -41,7 +41,7 @@ public class DBHelperR extends SQLiteOpenHelper {
         onUpgrade(db, oldVersion, newVersion);
     }
 
-    public boolean insertNode(int type, int x, int y, long user, long nodeID) {
+    public boolean insertNode(int type, int x, int y, String user, long nodeID) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("type", type);
@@ -54,7 +54,7 @@ public class DBHelperR extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean updateNode(int type, int x, int y, long user, long nodeID) {
+    public boolean updateNode(int type, int x, int y, String user, long nodeID) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("type", type);
@@ -119,12 +119,12 @@ public class DBHelperR extends SQLiteOpenHelper {
         return y;
     }
 
-    public long getUser(long nodeID) {
+    public String getUser(long nodeID) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select user from nodes where node = '" + nodeID + "'", null);
 
         cursor.moveToFirst();
-        long userID = Long.parseLong(cursor.getString(cursor.getColumnIndex(NODES_COLUMN_USER)));
+        String userID = (cursor.getString(cursor.getColumnIndex(NODES_COLUMN_USER)));
 
         cursor.close();
         db.close();
