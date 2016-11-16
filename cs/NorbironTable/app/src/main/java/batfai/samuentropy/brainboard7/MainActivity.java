@@ -10,6 +10,8 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity
 {
 
+    private long userID;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -38,13 +40,7 @@ public class MainActivity extends AppCompatActivity
             }
 
         });
-
-       // Bundle mBundle = getIntent().getExtras();
-        //mBundle.getBoolean("connectionCheck");
-
     }
-
-
 
     public void startTable()
     {
@@ -56,7 +52,8 @@ public class MainActivity extends AppCompatActivity
     public void startLogin()
     {
         Intent intent = new Intent();
-        intent.setClass(this, LoginActivity.class);
+        intent.setClass(this, FacebookLoginActivity.class); //TODO
+        intent.putExtra("USER_ID", userID);
         this.startActivity(intent);
 
     }
