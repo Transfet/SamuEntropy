@@ -22,6 +22,7 @@
  import com.google.android.gms.common.api.GoogleApiClient;
  import com.google.android.gms.common.api.OptionalPendingResult;
  import com.google.android.gms.common.api.ResultCallback;
+ import com.google.android.gms.iid.InstanceID;
 
  public class LoginActivity extends AppCompatActivity implements
  GoogleApiClient.OnConnectionFailedListener, View.OnClickListener
@@ -153,6 +154,9 @@
              assert acct != null;
              mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
              updateUI(signedIn);
+
+           //  String iid = InstanceID.getInstance(context).getId();
+
 
          }
          else

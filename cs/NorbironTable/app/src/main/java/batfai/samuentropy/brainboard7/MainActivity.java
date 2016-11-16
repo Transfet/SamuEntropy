@@ -52,8 +52,8 @@ public class MainActivity extends AppCompatActivity
     public void startLogin()
     {
         Intent intent = new Intent();
-        intent.setClass(this, FacebookLoginActivity.class); //TODO
-        intent.putExtra("USER_ID", userID);
+        intent.setClass(this, LoginActivity.class); //TODO
+        //intent.putExtra("USER_ID", userID);
         this.startActivity(intent);
 
     }
