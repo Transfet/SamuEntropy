@@ -10,6 +10,8 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity
 {
 
+    private long userID;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity
     {
         Intent intent = new Intent();
         intent.setClass(this, FacebookLoginActivity.class); //TODO
+        intent.putExtra("USER_ID", userID);
         this.startActivity(intent);
 
     }

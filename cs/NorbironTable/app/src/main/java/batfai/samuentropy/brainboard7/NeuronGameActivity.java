@@ -39,26 +39,38 @@
  */
 package batfai.samuentropy.brainboard7;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import hu.gyulbor.norbirontable.webservice.DBHelperR;
 
 /**
- *
  * @author nbatfai
  */
 public class NeuronGameActivity extends AppCompatActivity {
 
     private boolean isChecked = false;
+    public static DBHelperR nodeDB;
+    private long userID = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        nodeDB = new DBHelperR(this);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.neurongame);
+
+        setContentView(R.layout.neuron);
         Toolbar toolbar = (Toolbar) findViewById(R.id.plain_toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_home_black_48dp);
         setSupportActionBar(toolbar);
@@ -68,7 +80,6 @@ public class NeuronGameActivity extends AppCompatActivity {
 
         // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
-                
     }
 
     @Override
@@ -85,20 +96,26 @@ public class NeuronGameActivity extends AppCompatActivity {
         return true;
     }
 
+    private static boolean doesDatabaseExist(Context context, String dbName) {
+        File dbFile = context.getDatabasePath(dbName);
+        return dbFile.exists();
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_build:
                 android.content.Intent i = new android.content.Intent(this, NodeActivity.class);
                 startActivity(i);
+
                 return true;
 
             case R.id.action_delete:
 
-                if(!isChecked) {
+                if (!isChecked) {
                     item.setIcon(R.drawable.ic_delete_white_48dp);
-                }
-                else {
+                } else {
                     item.setIcon(R.drawable.ic_delete_black_48dp);
                 }
                 isChecked = !item.isChecked();
@@ -120,6 +137,47 @@ public class NeuronGameActivity extends AppCompatActivity {
     public static boolean isChecked() {
 
         return neuronGameActivity.isChecked;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        nodeDB = new DBHelperR(this);
+
+        if (NorbironSurfaceView.getNodeBoxes().size() != 0) {
+
+            for (int i = 0; i < NorbironSurfaceView.getNodeBoxes().size(); i++) {
+
+                int type = NorbironSurfaceView.getNodeBoxes().get(i).getType();
+                int x = NorbironSurfaceView.getNodeBoxes().get(i).getX();
+                int y = NorbironSurfaceView.getNodeBoxes().get(i).getY();
+                long nodeID = NorbironSurfaceView.getNodeBoxes().get(i).getId();
+
+                Log.d("Created node with: ",type + " " + x + " " + y + " " + nodeID);
+
+                int rowCount = NeuronGameActivity.nodeDB.countRows();
+                boolean updateOnly = false;
+
+                if (rowCount > 0) {
+                    List<Long> nodesByID = NeuronGameActivity.nodeDB.getNodeIDs();
+                    for (long currentID : nodesByID) {
+                        if (currentID == nodeID) {
+                            updateOnly = true;
+                        }
+                    }
+                }
+
+                if (updateOnly) {
+                    nodeDB.updateNode(type, x, y, userID, nodeID);
+                    Log.d("csak", "update");
+                } else {
+                    nodeDB.insertNode(type, x, y, userID, nodeID);
+                    Log.d("csak", "insert");
+                }
+            }
+        }
+
     }
 }
 
