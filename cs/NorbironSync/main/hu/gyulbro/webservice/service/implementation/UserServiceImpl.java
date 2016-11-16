@@ -28,6 +28,45 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<String> getUserDataToList(String userID) {
+        List<User> users = findAllUsers();
+        List<String> listToPass = new ArrayList<>();
+
+        for (User user : users) {
+            if (user.getUserID().equals(userID)) {
+                listToPass.add(user.getNickname());
+                listToPass.add(user.getFirstName());
+                listToPass.add(user.getLastName());
+                listToPass.add(user.getUserID());
+            }
+        }
+
+        return listToPass;
+    }
+
+    @Override
+    public String getIDbyGoogleID(String googleID) {
+        List<User> users = findAllUsers();
+        for (User user : users) {
+            if (user.getGoogleID().equals(googleID)) {
+                return user.getUserID();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String getUserID(String nickname) {
+        List<User> users = findAllUsers();
+        for (User user : users) {
+            if (user.getNickname().equals(nickname)) {
+                return user.getUserID();
+            }
+        }
+        return null;
+    }
+
+    @Override
     public void addNewUser(UserBO user) {
         User users = new User();
         users.setNickname(user.getNickname());
@@ -54,60 +93,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserBO getBOinstance(String userID) {
+    public void changeEmail(String userID, String email) {
         List<User> users = findAllUsers();
-        UserBO userInstance = null;
         for (User user : users) {
             if (user.getUserID().equals(userID)) {
-                userInstance = new UserBO(
-                        user.getNickname(), //nickname
-                        user.getFirstName(), //firstName
-                        user.getLastName(),  //lastName
-                        user.getEmail(), //email
-                        user.getPassword()); //password
-                userInstance.setUserID(user.getUserID());
-                String googleID = user.getGoogleID();
-                if (googleID == null) {
-
-                } else {
-                    userInstance.setGoogleID(googleID);
-                }
+                user.setEmail(email);
             }
         }
-        return userInstance;
     }
 
     @Override
-    public String generateUserID() {
-        return UUID.randomUUID().toString().replace("-", "");
-    }
-
-    @Override
-    public String getUserID(String nickname) {
-        List<User> users = findAllUsers();
-        for (User user : users) {
-            if (user.getNickname().equals(nickname)) {
-                return user.getUserID();
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public List<String> getUserDataToList(String userID) {
-        List<User> users = findAllUsers();
-        List<String> listToPass = new ArrayList<>();
-
-        for (User user : users) {
-            if (user.getUserID().equals(userID)) {
-                listToPass.add(user.getNickname());
-                listToPass.add(user.getFirstName());
-                listToPass.add(user.getLastName());
-                listToPass.add(user.getUserID());
-            }
-        }
-
-        return listToPass;
+    public String generateNewNick(String firstName, String lastName) {
+        return firstName + lastName;
     }
 
     @Override
@@ -141,28 +138,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String getIDbyGoogleID(String googleID) {
-        List<User> users = findAllUsers();
-        for (User user : users) {
-            if (user.getGoogleID().equals(googleID)) {
-                return user.getUserID();
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public String generateNewNick (String firstName, String lastName) {
-        return firstName + lastName;
-    }
-
-    @Override
-    public void changeEmail (String userID, String email) {
-        List<User> users = findAllUsers();
-        for (User user : users) {
-            if (user.getUserID().equals(userID)) {
-               user.setEmail(email);
-            }
-        }
+    public String generateUserID() {
+        return UUID.randomUUID().toString().replace("-", "");
     }
 }
