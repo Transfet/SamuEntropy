@@ -43,6 +43,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.SurfaceView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import hu.gyulbor.norbirontable.webservice.DBHelperR;
@@ -170,7 +171,7 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
             int i = bundle.getInt("selectedNode");
 
             nodeBoxes.add((NeuronBox) nodes.get(i).clone());
-            nodeBoxes.get(nodeBoxes.size() - 1).setId(0);
+            nodeBoxes.get(nodeBoxes.size() - 1).setId(0); //SET ID OF THE JUST-CREATED NODE
         }
 
         surfaceHolder = getHolder();
@@ -196,7 +197,9 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
                 }
             }
 
-            for (NeuronBox nb : nodeBoxes) {
+            List<NeuronBox> workAroundList = new ArrayList<NeuronBox>(nodeBoxes); //workaround to prevent ConcurrentModificationException
+
+            for (NeuronBox nb : workAroundList) {
                 nb.draw(-startsx, -startsy, canvas);
             }
 
@@ -260,6 +263,7 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
 
                 if (Check.isChecked) {
                     nodeBoxes.remove(nb);
+                    nodeDB.deleteNode(nb.getId());
                 } else {
                     nb.setCover(!nb.getCover());
                     nb.setSelected(!nb.getSelected());

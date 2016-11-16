@@ -65,20 +65,20 @@ public class Nodes {
 
         neuronBox[3] = new NeuronBox(3,neuronSprite, 2 * 14, 64, 62, 100, nandIronProcCover, 100, 400);
 
-        resId = surfaceView.getResources().getIdentifier("gretironproci2", "drawable",
-                "batfai.samuentropy.brainboard7");
-        nandIronProcCover = android.graphics.BitmapFactory.decodeResource(surfaceView.getResources(), resId);
-        nandIronProcCover = android.graphics.Bitmap.createScaledBitmap(nandIronProcCover, 168, 197, false);
-
-        neuronBox[4] = new NeuronBox(4,neuronSprite, 2 * 14, 64, 62, 10, nandIronProcCover, 350, 400);
 
         resId = surfaceView.getResources().getIdentifier("gretironproci", "drawable",
                 "batfai.samuentropy.brainboard7");
         nandIronProcCover = android.graphics.BitmapFactory.decodeResource(surfaceView.getResources(), resId);
         nandIronProcCover = android.graphics.Bitmap.createScaledBitmap(nandIronProcCover, 168, 197, false);
 
-        neuronBox[5] = new NeuronBox(5,neuronSprite, 2 * 14, 64, 62, 15, nandIronProcCover, 600, 400);
+        neuronBox[4] = new NeuronBox(4,neuronSprite, 2 * 14, 64, 62, 15, nandIronProcCover, 350, 400);
 
+        resId = surfaceView.getResources().getIdentifier("gretironproci2", "drawable",
+                "batfai.samuentropy.brainboard7");
+        nandIronProcCover = android.graphics.BitmapFactory.decodeResource(surfaceView.getResources(), resId);
+        nandIronProcCover = android.graphics.Bitmap.createScaledBitmap(nandIronProcCover, 168, 197, false);
+
+        neuronBox[5] = new NeuronBox(5,neuronSprite, 2 * 14, 64, 62, 10, nandIronProcCover, 600, 400 );
     }
 
     public android.graphics.Bitmap getBoardPic() {

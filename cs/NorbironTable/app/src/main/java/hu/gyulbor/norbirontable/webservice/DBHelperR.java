@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class DBHelperR extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
@@ -76,9 +75,11 @@ public class DBHelperR extends SQLiteOpenHelper {
 
     public Integer deleteNode(long nodeID) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete("nodes",
+        Integer result = db.delete("nodes",
                 "node = ? ",
                 new String[]{Long.toString(nodeID)});
+        db.close();
+        return result;
 
     }
 
@@ -156,9 +157,8 @@ public class DBHelperR extends SQLiteOpenHelper {
 
     public int countRows() {
         SQLiteDatabase db = this.getWritableDatabase();
-        return (int) DatabaseUtils.queryNumEntries(db, NODES_TABLE_NAME);
+        int result = (int) DatabaseUtils.queryNumEntries(db, NODES_TABLE_NAME);
+        db.close();
+        return result;
     }
-
-
-
 }
