@@ -51,7 +51,7 @@ class Splash extends Thread {
 
     public void st() {
         android.content.Intent intent = new android.content.Intent();
-        intent.setClass(act, MainActivity.class); //TODO
+        intent.setClass(act, MainActivity.class);
         act.startActivity(intent);
         anim.stop();
     }

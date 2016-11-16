@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity
     public void startLogin()
     {
         Intent intent = new Intent();
-        intent.setClass(this, LoginActivity.class); //TODO
+        intent.setClass(this, LoginActivity.class);
         //intent.putExtra("USER_ID", userID);
         this.startActivity(intent);
 
