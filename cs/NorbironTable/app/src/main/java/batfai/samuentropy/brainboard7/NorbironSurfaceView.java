@@ -41,6 +41,7 @@ package batfai.samuentropy.brainboard7;
 
 import android.content.Intent;
 import android.view.SurfaceView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -160,9 +161,18 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
         this.context = context;
         nodes = new Nodes(this);
 
-        initBoxNodes();
-
         Intent intent = ((NeuronGameActivity) context).getIntent();
+
+        int orientation = getResources().getConfiguration().orientation;
+        Toast.makeText(context, "orientation " + Check.orientation, Toast.LENGTH_SHORT).show();
+
+        if (Check.orientation != orientation) {
+            nodeBoxes.clear();
+        }
+
+        initBoxNodes();
+        Toast.makeText(context, "cinit"+context.getApplicationContext(), Toast.LENGTH_SHORT).show();
+
 
         int defaultValue = 1111;
         int selectedNodeType = (intent.getIntExtra("selectedNode", defaultValue));
@@ -173,10 +183,16 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
             nodeBoxes.get(nodeBoxes.size() - 1).setId(0); //beállítja az id-jét ennek az éppen létrehozott nodenak.
         }
 
+        int orientation2 = getResources().getConfiguration().orientation;
+        Toast.makeText(context, "orientation " + orientation2, Toast.LENGTH_SHORT).show();
+
+        Check.orientation = orientation2;
+
         surfaceHolder = getHolder();
         surfaceHolder.addCallback(new SurfaceEvents(this));
 
         scaleGestureDetector = new android.view.ScaleGestureDetector(context, new ScaleAdapter(this));
+
 
     }
 

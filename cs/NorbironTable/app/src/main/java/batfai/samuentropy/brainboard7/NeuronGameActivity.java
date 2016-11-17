@@ -1,42 +1,42 @@
 /*
- * NeuronAnimActivity.java
- *
- * Norbiron Game
- * This is a case study for creating sprites for SamuEntropy/Brainboard.
- *
- * Copyright (C) 2016, Dr. Bátfai Norbert
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * Ez a program szabad szoftver; terjeszthető illetve módosítható a
- * Free Software Foundation által kiadott GNU General Public License
- * dokumentumában leírtak; akár a licenc 3-as, akár (tetszőleges) későbbi
- * változata szerint.
- *
- * Ez a program abban a reményben kerül közreadásra, hogy hasznos lesz,
- * de minden egyéb GARANCIA NÉLKÜL, az ELADHATÓSÁGRA vagy VALAMELY CÉLRA
- * VALÓ ALKALMAZHATÓSÁGRA való származtatott garanciát is beleértve.
- * További részleteket a GNU General Public License tartalmaz.
- *
- * A felhasználónak a programmal együtt meg kell kapnia a GNU General
- * Public License egy példányát; ha mégsem kapta meg, akkor
- * tekintse meg a <http://www.gnu.org/licenses/> oldalon.
- *
- * Version history:
- *
- * 0.0.1, 2013.szept.29.
- */
+* NeuronAnimActivity.java
+*
+* Norbiron Game
+* This is a case study for creating sprites for SamuEntropy/Brainboard.
+*
+* Copyright (C) 2016, Dr. Bátfai Norbert
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+* Ez a program szabad szoftver; terjeszthető illetve módosítható a
+* Free Software Foundation által kiadott GNU General Public License
+* dokumentumában leírtak; akár a licenc 3-as, akár (tetszőleges) későbbi
+* változata szerint.
+*
+* Ez a program abban a reményben kerül közreadásra, hogy hasznos lesz,
+* de minden egyéb GARANCIA NÉLKÜL, az ELADHATÓSÁGRA vagy VALAMELY CÉLRA
+* VALÓ ALKALMAZHATÓSÁGRA való származtatott garanciát is beleértve.
+* További részleteket a GNU General Public License tartalmaz.
+*
+* A felhasználónak a programmal együtt meg kell kapnia a GNU General
+* Public License egy példányát; ha mégsem kapta meg, akkor
+* tekintse meg a <http://www.gnu.org/licenses/> oldalon.
+*
+* Version history:
+*
+* 0.0.1, 2013.szept.29.
+*/
 package batfai.samuentropy.brainboard7;
 
 import android.os.Bundle;
@@ -47,6 +47,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -66,12 +67,7 @@ public class NeuronGameActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         nodeDB = new DBHelperR(this);
 
-       // Bundle mBundle = getIntent().getExtras();
-       // checkSignIn = mBundle.getBoolean("signedIn");
         super.onCreate(savedInstanceState);
-
-//        this.userID = getIntent().getStringExtra("uid");
-//        this.signedIn = getIntent().getExtras().getBoolean("checkSignIn");
 
         setContentView(R.layout.neuron);
         Toolbar toolbar = (Toolbar) findViewById(R.id.plain_toolbar);
@@ -103,6 +99,7 @@ public class NeuronGameActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_build:
+
                 android.content.Intent i = new android.content.Intent(this, NodeActivity.class);
                 startActivity(i);
 
@@ -137,51 +134,75 @@ public class NeuronGameActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        if (Check.isChecked) {
+            Check.isChecked = false;
+        }
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
+        saveNodes();
 
-        if(signedIn) {
-            nodeDB = new DBHelperR(this);
+        Toast.makeText(this, " baszódjmeg" , Toast.LENGTH_SHORT).show();
+    }
 
-            //ha több, mint egy node van a kijelzőn, akkor mentünk az adatbázisba.
-            if (NorbironSurfaceView.getNodeBoxes().size() != 0) {
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        Toast.makeText(this, " ténylegbaszódjmeg" , Toast.LENGTH_SHORT).show();
 
-                for (int i = 0; i < NorbironSurfaceView.getNodeBoxes().size(); i++) {
+    }
 
-                    //lementjük az egyes adatokat
-                    int type = NorbironSurfaceView.getNodeBoxes().get(i).getType();
-                    int x = NorbironSurfaceView.getNodeBoxes().get(i).getX();
-                    int y = NorbironSurfaceView.getNodeBoxes().get(i).getY();
-                    long nodeID = NorbironSurfaceView.getNodeBoxes().get(i).getId();
 
-                    Log.d("Created node with: ", type + " " + x + " " + y + " " + userID + " " + nodeID);
 
-                    int rowCount = NeuronGameActivity.nodeDB.countRows();
-                    boolean updateOnly = false;
+    private void saveNodes() {
 
-                    //az adatbázisban lévő nodeokat csak frissítjük, az újakat hozzáadjuk.
-                    if (rowCount > 0) {
+        //  if(signedIn) {
+        nodeDB = new DBHelperR(this);
 
-                        //ebben a listában van minden id,
-                        //ha a jelenleg vizsgált id benne van, akkor csak frissítjük.
-                        List<Long> nodesByID = NeuronGameActivity.nodeDB.getNodeIDs();
+        //ha több, mint egy node van a kijelzőn, akkor mentünk az adatbázisba.
+        if (NorbironSurfaceView.getNodeBoxes().size() != 0) {
 
-                        for (long currentID : nodesByID) {
-                            if (currentID == nodeID) {
-                                updateOnly = true;
-                            }
+            for (int i = 0; i < NorbironSurfaceView.getNodeBoxes().size(); i++) {
+
+                //lementjük az egyes adatokat
+                int type = NorbironSurfaceView.getNodeBoxes().get(i).getType();
+                int x = NorbironSurfaceView.getNodeBoxes().get(i).getX();
+                int y = NorbironSurfaceView.getNodeBoxes().get(i).getY();
+                long nodeID = NorbironSurfaceView.getNodeBoxes().get(i).getId();
+
+                Log.d("Created node with: ", type + " " + x + " " + y + " " + userID + " " + nodeID);
+
+                int rowCount = NeuronGameActivity.nodeDB.countRows();
+                boolean updateOnly = false;
+
+                //az adatbázisban lévő nodeokat csak frissítjük, az újakat hozzáadjuk.
+                if (rowCount > 0) {
+
+                    //ebben a listában van minden id,
+                    //ha a jelenleg vizsgált id benne van, akkor csak frissítjük.
+                    List<Long> nodesByID = NeuronGameActivity.nodeDB.getNodeIDs();
+
+                    for (long currentID : nodesByID) {
+                        if (currentID == nodeID) {
+                            updateOnly = true;
                         }
                     }
+                }
 
-                    if (updateOnly) {
-                        nodeDB.updateNode(type, x, y, userID, nodeID);
-                        Log.d("node", "updated");
-                    } else {
-                        nodeDB.insertNode(type, x, y, userID, nodeID);
-                        Log.d("node", "inserted");
-                    }
+                if (updateOnly) {
+                    nodeDB.updateNode(type, x, y, userID, nodeID);
+                    Log.d("node", "updated");
+                } else {
+                    nodeDB.insertNode(type, x, y, userID, nodeID);
+                    Log.d("node", "inserted");
                 }
             }
+            // }
         }
     }
 }
