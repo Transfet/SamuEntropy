@@ -272,8 +272,8 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
             if (nb != null) {
 
                 if (Check.isChecked) {
+                   // nodeDB.deleteNode(nb.getId());
                     nodeBoxes.remove(nb);
-                    nodeDB.deleteNode(nb.getId());
                 } else {
                     nb.setCover(!nb.getCover());
                     nb.setSelected(!nb.getSelected());
