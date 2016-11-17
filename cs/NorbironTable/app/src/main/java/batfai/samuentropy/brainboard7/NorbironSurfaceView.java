@@ -159,6 +159,8 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
 
     private void cinit(android.content.Context context) {
 
+        nodeDB = new DBHelperR(context);
+
         this.context = context;
         nodes = new Nodes(this);
 
@@ -170,8 +172,7 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
         if (orientationOld != orientationNew) {
             nodeBoxes.clear();
             initBoxNodes();
-        }
-        else {
+        } else {
             int defaultValue = 1111;
             int selectedNodeType = (intent.getIntExtra("selectedNode", defaultValue));
 
@@ -187,8 +188,6 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
         surfaceHolder.addCallback(new SurfaceEvents(this));
 
         scaleGestureDetector = new android.view.ScaleGestureDetector(context, new ScaleAdapter(this));
-
-
     }
 
     @Override
@@ -223,7 +222,7 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
         try {
             canvas = surfaceHolder.lockCanvas();
             if (canvas != null) {
-                onDraw(canvas);
+                    onDraw(canvas);
             }
 
         } finally {
@@ -258,6 +257,8 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
     @Override
     public boolean onTouchEvent(android.view.MotionEvent event) {
 
+        nodeDB = new DBHelperR(context);
+
         scaleGestureDetector.onTouchEvent(event);
 
         float x = event.getX() / scaleFactor;
@@ -272,8 +273,8 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
             if (nb != null) {
 
                 if (Check.isChecked) {
-                   // nodeDB.deleteNode(nb.getId());
                     nodeBoxes.remove(nb);
+                    nodeDB.deleteNode(nb.getId());
                 } else {
                     nb.setCover(!nb.getCover());
                     nb.setSelected(!nb.getSelected());

@@ -131,12 +131,12 @@ public class NeuronGameActivity extends AppCompatActivity {
         if (Check.isChecked) {
             Check.isChecked = false;
         }
+        saveNodes();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        saveNodes();
     }
 
 

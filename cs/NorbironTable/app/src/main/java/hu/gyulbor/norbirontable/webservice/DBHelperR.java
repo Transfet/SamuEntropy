@@ -74,7 +74,6 @@ public class DBHelperR extends SQLiteOpenHelper {
                 new String[]{Long.toString(nodeID)});
         db.close();
         return result;
-
     }
 
     public int getType(long nodeID) {
