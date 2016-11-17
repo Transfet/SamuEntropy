@@ -165,10 +165,7 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
         Intent intent = ((NeuronGameActivity) context).getIntent();
 
         int orientationOld = Check.orientation;
-        Toast.makeText(context, "orientation " + Check.orientation, Toast.LENGTH_SHORT).show();
-
         int orientationNew = getResources().getConfiguration().orientation;
-        Toast.makeText(context, "orientation " + orientationNew, Toast.LENGTH_SHORT).show();
 
         if (orientationOld != orientationNew) {
             nodeBoxes.clear();
