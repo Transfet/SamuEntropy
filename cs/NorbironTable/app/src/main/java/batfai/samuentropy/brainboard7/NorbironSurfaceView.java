@@ -40,6 +40,7 @@
 package batfai.samuentropy.brainboard7;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.SurfaceView;
 import android.widget.Toast;
 
@@ -163,30 +164,27 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
 
         Intent intent = ((NeuronGameActivity) context).getIntent();
 
-        int orientation = getResources().getConfiguration().orientation;
+        int orientationOld = Check.orientation;
         Toast.makeText(context, "orientation " + Check.orientation, Toast.LENGTH_SHORT).show();
 
-        if (Check.orientation != orientation) {
+        int orientationNew = getResources().getConfiguration().orientation;
+        Toast.makeText(context, "orientation " + orientationNew, Toast.LENGTH_SHORT).show();
+
+        if (orientationOld != orientationNew) {
             nodeBoxes.clear();
+            initBoxNodes();
         }
+        else {
+            int defaultValue = 1111;
+            int selectedNodeType = (intent.getIntExtra("selectedNode", defaultValue));
 
-        initBoxNodes();
-        Toast.makeText(context, "cinit"+context.getApplicationContext(), Toast.LENGTH_SHORT).show();
+            if (selectedNodeType != defaultValue) {
 
-
-        int defaultValue = 1111;
-        int selectedNodeType = (intent.getIntExtra("selectedNode", defaultValue));
-
-        if (selectedNodeType != defaultValue) {
-
-            nodeBoxes.add((NeuronBox) nodes.get(selectedNodeType).clone());
-            nodeBoxes.get(nodeBoxes.size() - 1).setId(0); //beállítja az id-jét ennek az éppen létrehozott nodenak.
+                nodeBoxes.add((NeuronBox) nodes.get(selectedNodeType).clone());
+                nodeBoxes.get(nodeBoxes.size() - 1).setId(0); //beállítja az id-jét ennek az éppen létrehozott nodenak.
+            }
         }
-
-        int orientation2 = getResources().getConfiguration().orientation;
-        Toast.makeText(context, "orientation " + orientation2, Toast.LENGTH_SHORT).show();
-
-        Check.orientation = orientation2;
+        Check.orientation = orientationNew;
 
         surfaceHolder = getHolder();
         surfaceHolder.addCallback(new SurfaceEvents(this));

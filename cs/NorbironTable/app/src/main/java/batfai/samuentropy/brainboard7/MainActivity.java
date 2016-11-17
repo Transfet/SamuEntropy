@@ -50,16 +50,8 @@ public class MainActivity extends AppCompatActivity
     {
         super.onResume();
 
-           Log.i(TAG, "onResume: ");
           //  this.userID = getIntent().getStringExtra("userId");
 
-    }
-
-    @Override
-    public void onPause()
-    {
-        super.onPause();
-        Log.d(TAG,"onPaused");
     }
 
     //starts the game

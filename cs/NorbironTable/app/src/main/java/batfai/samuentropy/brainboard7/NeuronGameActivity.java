@@ -58,10 +58,10 @@ import hu.gyulbor.norbirontable.webservice.DBHelperR;
  */
 public class NeuronGameActivity extends AppCompatActivity {
 
-    private boolean isChecked = false;
     public static DBHelperR nodeDB;
     private String userID = "default";
     private boolean signedIn = false;
+    private boolean isChecked = Check.isChecked;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,7 +84,7 @@ public class NeuronGameActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem checkable = menu.findItem(R.id.action_delete);
-        checkable.setChecked(isChecked);
+        checkable.setChecked(Check.isChecked);
         return true;
     }
 
@@ -109,12 +109,12 @@ public class NeuronGameActivity extends AppCompatActivity {
 
                 if (!isChecked) {
                     item.setIcon(R.drawable.ic_delete_white_48dp);
+                    isChecked = true;
                 } else {
                     item.setIcon(R.drawable.ic_delete_black_48dp);
+                    isChecked = false;
                 }
-                isChecked = !item.isChecked();
-                item.setChecked(isChecked);
-                Check.isChecked = this.isChecked;
+                Check.isChecked = isChecked;
 
                 return true;
 
@@ -122,15 +122,7 @@ public class NeuronGameActivity extends AppCompatActivity {
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
-    }
-
-    static NeuronGameActivity neuronGameActivity = new NeuronGameActivity();
-
-    public static boolean isChecked() {
-
-        return neuronGameActivity.isChecked;
     }
 
     @Override
@@ -145,18 +137,7 @@ public class NeuronGameActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         saveNodes();
-
-        Toast.makeText(this, " baszódjmeg" , Toast.LENGTH_SHORT).show();
     }
-
-    @Override
-    protected void onDestroy()
-    {
-        super.onDestroy();
-        Toast.makeText(this, " ténylegbaszódjmeg" , Toast.LENGTH_SHORT).show();
-
-    }
-
 
 
     private void saveNodes() {
@@ -202,8 +183,9 @@ public class NeuronGameActivity extends AppCompatActivity {
                     Log.d("node", "inserted");
                 }
             }
-            // }
         }
+        Log.d("-----------", "-----------");
+
     }
 }
 
