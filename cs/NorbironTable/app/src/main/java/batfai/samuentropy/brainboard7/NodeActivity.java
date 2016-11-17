@@ -111,7 +111,7 @@ public class NodeActivity extends AppCompatActivity {
     public void onCreate(android.os.Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nodes);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.asd_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.nodes_toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_dashboard_black_48dp);
         setSupportActionBar(toolbar);
 
@@ -120,6 +120,7 @@ public class NodeActivity extends AppCompatActivity {
 
         // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
+
 
         android.widget.GridView gridView = (android.widget.GridView) findViewById(R.id.nodelist);
         gridView.setAdapter(new NodeAdapter(this));

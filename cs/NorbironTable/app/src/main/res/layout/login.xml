@@ -4,7 +4,19 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/pcb550i">
+    android:background="#FFFF">
+
+    <ImageView
+        android:id="@+id/esamu"
+        android:src="@drawable/esamu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:scaleType="centerInside" />
+
+
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/plain_toolbar"
@@ -15,36 +27,42 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+
     <ImageView
-        android:id="@+id/neuronanimation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_centerInParent="true"
-        android:scaleType="centerInside"/>
-    
-    <Button
-        android:id="@+id/button_play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/startButton"
-        android:drawableTop="@drawable/button_start"
-        android:textSize="40dp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        app:srcCompat="@drawable/neuron3inkscape2a4c"
+        android:id="@+id/imageView4"
+        android:scaleType="centerInside"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/button_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
         android:text="@string/loginButton"
-        android:textSize="40dp"
-        android:layout_marginBottom="107dp"
+        android:textSize="40sp"
+        android:layout_alignBaseline="@+id/button_play"
         android:layout_alignBottom="@+id/button_play"
-        android:layout_toLeftOf="@+id/button_play"
-        android:layout_toStartOf="@+id/button_play" />
+        android:layout_alignLeft="@+id/esamu"
+        android:layout_alignStart="@+id/esamu"
+        android:layout_marginLeft="35dp"
+        android:layout_marginStart="35dp" />
+
+    <Button
+        android:id="@+id/button_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/startButton"
+        android:textSize="40sp"
+        android:layout_marginBottom="43dp"
+        android:layout_above="@+id/esamu"
+        android:layout_toRightOf="@+id/button_login"
+        android:layout_toEndOf="@+id/button_login"
+        android:layout_marginLeft="38dp"
+        android:layout_marginStart="38dp" />
+
 
 </RelativeLayout>

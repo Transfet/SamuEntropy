@@ -60,17 +60,26 @@
             android:theme="@style/Theme.NorbironSplash"
             android:parentActivityName=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="SignupActivity"
+            android:exported="true"
+            android:theme="@style/Theme.NorbironSplash"
+            android:parentActivityName=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.NorbironSplash"
-            android:icon="@drawable/ic_account_box_black_48dp">
+            android:theme="@style/Theme.NorbironSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity

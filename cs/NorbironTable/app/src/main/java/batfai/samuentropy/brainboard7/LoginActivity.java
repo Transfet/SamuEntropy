@@ -2,6 +2,7 @@ package batfai.samuentropy.brainboard7;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
@@ -30,17 +31,20 @@ public class LoginActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
     private EditText emailField;
     private EditText passwordField;
+
     private Button loginButton;
     private Button registerButton;
 
-    private boolean signedIn = false;
+
+    public static boolean signedIn = false;
 
     private static final String TAG = "LoginActivity";
     private static final int RC_SIGN_IN = 9001;
 
     private GoogleApiClient mGoogleApiClient;
-    private TextView mStatusTextView;
+    public static TextView mStatusTextView;
     private ProgressDialog mProgressDialog;
+    private String userID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,24 +66,21 @@ public class LoginActivity extends AppCompatActivity implements
         loginButton = (Button) findViewById(R.id.loginButton);
         registerButton = (Button) findViewById(R.id.registerButton);
 
-     /*   Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-        Bundle mBundle = new Bundle();
-        mBundle.putBoolean("connectionCheck", signedIn);
-        intent.putExtras(mBundle);
-        startActivity(intent);
-*/
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signIn(emailField.getText().toString(), passwordField.getText().toString());
             }
         });
+
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createAccount(emailField.getText().toString(), passwordField.getText().toString());
+                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+                startActivity(intent);
             }
         });
+
 
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -131,61 +132,62 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == RC_SIGN_IN)
+        {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
         }
     }
 
     @Override
-    protected void onPause() {
+    protected void onPause()
+    {
         super.onPause();
         mProgressDialog.dismiss();
     }
 
-    private void handleSignInResult(GoogleSignInResult result) {
+    private void handleSignInResult(GoogleSignInResult result)
+    {
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
-        if (result.isSuccess()) {
+        if (result.isSuccess())
+        {
             signedIn = true;
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             assert acct != null;
+            userID = acct.getId();
             mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
             updateUI(signedIn);
 
-        } else {
+        }
+        else
+        {
             updateUI(signedIn);
         }
     }
 
-    private void createAccount(String email, String password) {
-        Log.d(TAG, "createAccount:" + email);
-        if (TextUtils.isEmpty(email)) {
-            Toast.makeText(this, "Please enter email", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if (TextUtils.isEmpty(password)) {
-            Toast.makeText(this, "Please enter password", Toast.LENGTH_LONG).show();
-
-        }
-
-    }
 
     private void signIn(String email, String password) {
         Log.d(TAG, "signIn:" + email);
 
-        if (TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(email))
+        {
             Toast.makeText(this, "Please enter email", Toast.LENGTH_LONG).show();
             return;
         }
 
-        if (TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(password))
+        {
             Toast.makeText(this, "Please enter password", Toast.LENGTH_LONG).show();
         }
+
+        /*
+        IDE JÖN MAJD A DB KEZELÉS, HOGYAN FOGUNK BEJELENTKEZNI STB..., EMAIL, PASSWORD EGYÉRTELMŰ
+         */
 
         //if the email and password are not empty
         //displaying a progress dialog
@@ -239,7 +241,10 @@ public class LoginActivity extends AppCompatActivity implements
 
     private void start() {
         Intent intent = new Intent();
-        intent.setClass(this, NeuronGameActivity.class);
+        intent.setClass(this, MainActivity.class);
+        intent.putExtra("userId", userID);
+        intent.putExtra("signedInCheck", signedIn);
         this.startActivity(intent);
     }
+
 }

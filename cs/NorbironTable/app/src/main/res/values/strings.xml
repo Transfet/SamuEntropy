@@ -9,6 +9,11 @@
     <string name="register">Sign Up</string>
     <string name="uPasswd">Password</string>
     <string name="uEmail">Email</string>
+    <string name="nickName">Nickname</string>
+    <string name="firstName">First name</string>
+    <string name="lastName">Last name</string>
+
+
 
     <string name="signed_in_fmt">Signed in as: %s</string>
     <string name="loading">Loading…</string>

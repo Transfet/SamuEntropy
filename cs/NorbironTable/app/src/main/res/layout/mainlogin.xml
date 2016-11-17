@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFF">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/login_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <ImageView
+        android:id="@+id/esamu"
+        android:src="@drawable/esamu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:scaleType="centerInside" />
 
 <RelativeLayout
     android:layout_width="match_parent"
@@ -11,9 +32,11 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColorHint="#FF0000"
+        android:textColor="#F00"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:layout_alignParentTop="true"
+        android:layout_marginTop="107dp"
         android:layout_centerHorizontal="true"
         android:layout_marginRight="30dp"
         android:layout_marginLeft="30dp"
@@ -23,6 +46,8 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColorHint="#FF0000"
+        android:textColor="#F00"
         android:inputType="textPassword"
         android:ems="10"
         android:layout_below="@+id/emailText"
@@ -62,6 +87,15 @@
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp"/>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/neuron3inkscape2a5c"
+        android:id="@+id/imageView"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/loginButton"
+        android:layout_toStartOf="@+id/loginButton" />
+
 </RelativeLayout>
 
     <LinearLayout
@@ -84,6 +118,7 @@
             android:textSize="30sp"
             android:layout_gravity="center_horizontal"/>
         </LinearLayout>
+
 
 
 </RelativeLayout>

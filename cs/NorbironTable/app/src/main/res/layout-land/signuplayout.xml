@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFF"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/signup_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageVie"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/signUpButton"
+            android:layout_toStartOf="@+id/signUpButton" />
+
+
+    <Button
+        android:text="@string/register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:id="@+id/signUpButton"
+        android:visibility="visible"
+        android:layout_marginLeft="129dp"
+        android:layout_marginStart="129dp"
+        android:layout_below="@+id/esamu"
+        android:layout_alignLeft="@+id/esamu"
+        android:layout_alignStart="@+id/esamu" />
+
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColorHint="#000000"
+            android:textColor="#000000"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/lastName"
+            android:hint="@string/lastName"
+        android:layout_marginLeft="26dp"
+            android:layout_marginStart="21dp"
+        android:layout_alignBaseline="@+id/firstName"
+        android:layout_alignBottom="@+id/firstName"
+        android:layout_toEndOf="@+id/signUpButton" />
+
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColorHint="#000000"
+            android:textColor="#000000"
+        android:inputType="text"
+            android:ems="10"
+            android:id="@+id/nickName"
+            android:hint="@string/nickName"
+        android:layout_marginLeft="138dp"
+        android:layout_below="@+id/signup_toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColorHint="#000000"
+        android:textColor="#000000"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/email"
+        android:hint="@string/uEmail"
+        android:layout_marginLeft="39dp"
+        android:layout_marginStart="39dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/nickName"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColorHint="#000000"
+            android:textColor="#000000"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/password"
+            android:hint="@string/uPasswd"
+        android:layout_alignBaseline="@+id/email"
+        android:layout_alignBottom="@+id/email"
+        android:layout_alignStart="@+id/lastName" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColorHint="#000000"
+        android:textColor="#000000"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/firstName"
+        android:hint="@string/firstName"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/email" />
+
+    <ImageView
+        android:id="@+id/esamu"
+        android:src="@drawable/esamu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:scaleType="centerInside"
+        android:layout_below="@+id/lastName"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>

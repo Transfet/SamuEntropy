@@ -60,13 +60,18 @@ public class NeuronGameActivity extends AppCompatActivity {
     private boolean isChecked = false;
     public static DBHelperR nodeDB;
     private String userID = "default";
+    private boolean signedIn = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         nodeDB = new DBHelperR(this);
+
+       // Bundle mBundle = getIntent().getExtras();
+       // checkSignIn = mBundle.getBoolean("signedIn");
         super.onCreate(savedInstanceState);
 
-        this.userID = getIntent().getStringExtra("userID");
+//        this.userID = getIntent().getStringExtra("uid");
+//        this.signedIn = getIntent().getExtras().getBoolean("checkSignIn");
 
         setContentView(R.layout.neuron);
         Toolbar toolbar = (Toolbar) findViewById(R.id.plain_toolbar);
@@ -135,48 +140,49 @@ public class NeuronGameActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        nodeDB = new DBHelperR(this);
+        if(signedIn) {
+            nodeDB = new DBHelperR(this);
 
-        //ha több, mint egy node van a kijelzőn, akkor mentünk az adatbázisba.
-        if (NorbironSurfaceView.getNodeBoxes().size() != 0) {
+            //ha több, mint egy node van a kijelzőn, akkor mentünk az adatbázisba.
+            if (NorbironSurfaceView.getNodeBoxes().size() != 0) {
 
-            for (int i = 0; i < NorbironSurfaceView.getNodeBoxes().size(); i++) {
+                for (int i = 0; i < NorbironSurfaceView.getNodeBoxes().size(); i++) {
 
-                //lementjük az egyes adatokat
-                int type = NorbironSurfaceView.getNodeBoxes().get(i).getType();
-                int x = NorbironSurfaceView.getNodeBoxes().get(i).getX();
-                int y = NorbironSurfaceView.getNodeBoxes().get(i).getY();
-                long nodeID = NorbironSurfaceView.getNodeBoxes().get(i).getId();
+                    //lementjük az egyes adatokat
+                    int type = NorbironSurfaceView.getNodeBoxes().get(i).getType();
+                    int x = NorbironSurfaceView.getNodeBoxes().get(i).getX();
+                    int y = NorbironSurfaceView.getNodeBoxes().get(i).getY();
+                    long nodeID = NorbironSurfaceView.getNodeBoxes().get(i).getId();
 
-                Log.d("Created node with: ", type + " " + x + " " + y + " " + userID + " " + nodeID);
+                    Log.d("Created node with: ", type + " " + x + " " + y + " " + userID + " " + nodeID);
 
-                int rowCount = NeuronGameActivity.nodeDB.countRows();
-                boolean updateOnly = false;
+                    int rowCount = NeuronGameActivity.nodeDB.countRows();
+                    boolean updateOnly = false;
 
-                //az adatbázisban lévő nodeokat csak frissítjük, az újakat hozzáadjuk.
-                if (rowCount > 0) {
+                    //az adatbázisban lévő nodeokat csak frissítjük, az újakat hozzáadjuk.
+                    if (rowCount > 0) {
 
-                    //ebben a listában van minden id,
-                    //ha a jelenleg vizsgált id benne van, akkor csak frissítjük.
-                    List<Long> nodesByID = NeuronGameActivity.nodeDB.getNodeIDs();
+                        //ebben a listában van minden id,
+                        //ha a jelenleg vizsgált id benne van, akkor csak frissítjük.
+                        List<Long> nodesByID = NeuronGameActivity.nodeDB.getNodeIDs();
 
-                    for (long currentID : nodesByID) {
-                        if (currentID == nodeID) {
-                            updateOnly = true;
+                        for (long currentID : nodesByID) {
+                            if (currentID == nodeID) {
+                                updateOnly = true;
+                            }
                         }
                     }
-                }
 
-                if (updateOnly) {
-                    nodeDB.updateNode(type, x, y, userID, nodeID);
-                    Log.d("node", "updated");
-                } else {
-                    nodeDB.insertNode(type, x, y, userID, nodeID);
-                    Log.d("node", "inserted");
+                    if (updateOnly) {
+                        nodeDB.updateNode(type, x, y, userID, nodeID);
+                        Log.d("node", "updated");
+                    } else {
+                        nodeDB.insertNode(type, x, y, userID, nodeID);
+                        Log.d("node", "inserted");
+                    }
                 }
             }
         }
-
     }
 }
 
