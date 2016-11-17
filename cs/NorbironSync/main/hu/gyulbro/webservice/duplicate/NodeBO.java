@@ -7,13 +7,12 @@ public class NodeBO {
     private String yCoordinate;
     private String type;
 
-    public NodeBO(String userID, String nodeID,
-                  String xCoordinate, String yCoordinate, String type) {
-        this.userID = userID;
-        this.nodeID = nodeID;
+    public NodeBO(String type, String xCoordinate, String yCoordinate, String userID, String nodeID) {
+        this.type = type;
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
-        this.type = type;
+        this.userID = userID;
+        this.nodeID = nodeID;
     }
 
     public String getUserID() {

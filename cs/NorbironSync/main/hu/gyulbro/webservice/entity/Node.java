@@ -11,6 +11,8 @@ public class Node {
     private String xCoordinate;
     private String yCoordinate;
 
+    private String userID;
+
     @ManyToOne
     @JoinColumn(name = "USER_ID", referencedColumnName= User.ID_COLUMN_NAME)
     private User user;
@@ -57,5 +59,13 @@ public class Node {
 
     public void setNodeID(String nodeID) {
         this.nodeID = nodeID;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 }
