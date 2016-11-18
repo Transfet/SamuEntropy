@@ -45,6 +45,7 @@ import android.view.SurfaceView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import hu.gyulbor.norbirontable.webservice.DBHelperR;
@@ -69,7 +70,8 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
     protected float boardy = 0;
 
     private Nodes nodes;
-    private static java.util.List<NeuronBox> nodeBoxes = new java.util.ArrayList<>();
+    private static List<NeuronBox> nodeBoxes = new ArrayList<>();
+    private static List<NeuronBox> itemsToRemove = new ArrayList<>();
 
     protected NeuronBox selNb = null;
 
@@ -273,7 +275,8 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
             if (nb != null) {
 
                 if (Check.isChecked) {
-                    nodeBoxes.remove(nb);
+                    //nodeBoxes.remove(nb);
+                    itemsToRemove.add(nb);
                     nodeDB.deleteNode(nb.getId());
                 } else {
                     nb.setCover(!nb.getCover());
@@ -332,6 +335,14 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
 
                 for (NeuronBox nb : nodeBoxes) {
                     nb.step();
+                }
+
+                for(NeuronBox neuronBox: nodeBoxes) {
+                    for (NeuronBox boxToRemove : itemsToRemove) {
+                        if(boxToRemove.getId() == neuronBox.getId()) {
+                            nodeBoxes.remove(neuronBox);
+                        }
+                    }
                 }
 
                 repaint();
