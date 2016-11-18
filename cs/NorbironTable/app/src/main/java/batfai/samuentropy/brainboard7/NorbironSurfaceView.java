@@ -224,7 +224,7 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
         try {
             canvas = surfaceHolder.lockCanvas();
             if (canvas != null) {
-                    onDraw(canvas);
+                onDraw(canvas);
             }
 
         } finally {
@@ -337,10 +337,14 @@ public class NorbironSurfaceView extends SurfaceView implements Runnable {
                     nb.step();
                 }
 
-                for(NeuronBox neuronBox: nodeBoxes) {
-                    for (NeuronBox boxToRemove : itemsToRemove) {
-                        if(boxToRemove.getId() == neuronBox.getId()) {
-                            nodeBoxes.remove(neuronBox);
+                for (Iterator<NeuronBox> removeIt = itemsToRemove.iterator(); removeIt.hasNext(); ) {
+                    NeuronBox nb2remove = removeIt.next();
+                    for (Iterator<NeuronBox> iterator = nodeBoxes.iterator(); iterator.hasNext(); ) {
+                        NeuronBox nb = iterator.next();
+
+                        if (nb2remove.getId() == nb.getId()) {
+                            iterator.remove();
+                            removeIt.remove();
                         }
                     }
                 }
